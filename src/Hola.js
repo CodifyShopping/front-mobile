@@ -35,7 +35,7 @@ export default function Hola({ navigation }) {
     const [LOCAL, setLocal] = useState([]);
 
     fetchLocales = async () => {
-        axios.get("http://35.229.106.56/returnLocal", { headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" } })
+        axios.get("http://35.229.106.56:3000/returnLocal", { headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" } })
             .then((response) => {
                 //console.log(response.data)
                 setLocal(response.data)
@@ -53,7 +53,7 @@ export default function Hola({ navigation }) {
         return (
             <View style={styles.item}>
                 <Center>
-                    <Text style={styles.title}>{NombreLocal}</Text>
+                    <Text style={styles.title}>{NombreLocal.toUpperCase()}</Text>
                 </Center>
             </View>
         );
@@ -106,7 +106,7 @@ export default function Hola({ navigation }) {
                                 keyExtractor={item => item._id}
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={{ paddingLeft: 20, paddingRight: 20, }}
+                                contentContainerStyle={{ paddingLeft: 30, paddingRight: 30, }}
                             />
                         </Center>
                     </View>
@@ -228,7 +228,17 @@ const styles = StyleSheet.create({
         height: 120,
         backgroundColor: "#FF464F",
         borderRadius: 24,
-        top: 10
+        top: 10,
+
+        //shadows
+        shadowColor: "#FF464F",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
+        elevation: 15,
     },
     textEscanear: {
         color: "white",
@@ -250,7 +260,16 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: "#FFC542",
         borderRadius: 24,
-        top: 40
+        top: 40,
+        //shadows
+        shadowColor: "#FFC542",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
+        elevation: 15,
 
     },
     textWishlist: {
@@ -276,6 +295,15 @@ const styles = StyleSheet.create({
         width: 90,
         height: 90,
         borderRadius: 24,
+
+        shadowColor: "#FF464F",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
+        elevation: 15,
 
     },
     title: {

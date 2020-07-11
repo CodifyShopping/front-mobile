@@ -28,7 +28,7 @@ export default function Qr({ navigation }) {
 
         fetchProduct = async (data) => {
 
-            axios.post('http://35.229.106.56/returnProdCli',
+            axios.post('http://35.229.106.56:3000/returnProdCli',
                 {
                     id: data
                 },

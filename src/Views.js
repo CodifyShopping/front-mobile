@@ -121,7 +121,7 @@ export default function Views({ route, navigation }) {
             </View>
             <View style={styles.box4}>
                 <Center>
-                    <TouchableOpacity style={styles.probar}>
+                    <TouchableOpacity style={styles.probar} onPress={() => navigation.navigate("Done")}>
                         <Center>
                             <Text style={styles.textProbar}>Probar ahora</Text>
                         </Center>
