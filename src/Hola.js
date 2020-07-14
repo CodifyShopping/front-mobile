@@ -8,6 +8,7 @@ import axios from 'axios';
 
 
 
+
 // const DATA = [
 //     {
 //         id: '1',
@@ -99,6 +100,7 @@ export default function Hola({ navigation }) {
 
                     <View style={styles.InsideBox22}>
                         <Center>
+
                             <Text style={styles.Comercios}>Comercios</Text>
                             <FlatList
                                 data={LOCAL}
