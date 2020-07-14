@@ -5,16 +5,20 @@ import LottieView from 'lottie-react-native'
 
 export default function Done({ navigation }) {
     return (
+
         <Center>
+
             <LottieView source={require('./assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
-            <Text style={styles.producto}>Producto enviado</Text>
+            <Text style={styles.producto}>Producto solicitado</Text>
             <Text style={styles.text2}>Dentro de poco te lo estaran trayendo</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Hola")}>
                 <Center>
                     <Text style={styles.text3}>Volver a Home</Text>
                 </Center>
             </TouchableOpacity>
+
         </Center>
+
     )
 }
 
@@ -28,6 +32,7 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "400",
         fontSize: 20,
+
     },
     volverBtn: {
         width: "60%",
@@ -50,5 +55,6 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "600",
         fontSize: 20,
+
     },
 })

@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button, Dimensions, TouchableOpacity, Alert } f
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
+import { Center } from './Center';
 
 export default function Qr({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -122,14 +123,18 @@ export default function Qr({ navigation }) {
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
                     <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, photo: foto }), setScanned(false), setCorrecto(false)]} >
-                        <Text style={styles.text2}>Ver el producto</Text>
+                        <Center>
+                            <Text style={styles.text2}>Ver el producto</Text>
+                        </Center>
                     </TouchableOpacity>
                 )}
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 incorrecto && (
                     <TouchableOpacity style={styles.boton1} onPress={() => [setScanned(false), setIncorrecto(false)]} >
-                        <Text style={styles.text2}>ERROR: intente nuevamente</Text>
+                        <Center>
+                            <Text style={styles.text2}>ERROR: intente nuevamente</Text>
+                        </Center>
                     </TouchableOpacity>
                 )}
 
@@ -196,7 +201,6 @@ const styles = StyleSheet.create({
     text2: {
         color: "black",
         position: "absolute",
-        top: 15,
         fontWeight: "600",
         fontSize: 18
     }

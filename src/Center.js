@@ -9,8 +9,7 @@ export const Center = ({ children }) => {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            flexDirection: "column"
-
+            flexDirection: "column",
         }}>
             {children}
         </View>

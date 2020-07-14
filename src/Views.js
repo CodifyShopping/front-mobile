@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
 import { Center } from "./Center";
 import { AntDesign } from '@expo/vector-icons';
@@ -11,6 +11,10 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 
 
 const DATA = [
+    // {
+    //     id: '0',
+    //     talle: 'XS',
+    // },
     {
         id: '1',
         talle: 'S',
@@ -33,36 +37,34 @@ const DATA = [
     },
 ];
 
-function Item({ id, talle, selected, onSelect }) {
-    return (
-        <TouchableOpacity
-            onPress={() => onSelect(id)}
-            style={[
-                styles.item,
-                { borderColor: selected ? '#FF464F' : 'gray', backgroundColor: selected ? '#FFA7AB' : 'white' },
-            ]}
-        ><Center>
-                <Text style={styles.talle}>{talle}</Text>
-            </Center>
-        </TouchableOpacity>
-    );
-}
+const Item = ({ item, onPress, style }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+        <Center>
+            <Text style={styles.talle}>{item.talle}</Text>
+        </Center>
+    </TouchableOpacity>
+);
 
 export default function Views({ route, navigation }) {
-    const [selected, setSelected] = React.useState(new Map());
+    const [selectedId, setSelectedId] = useState(null);
+    const [selectedTalle, setSelectedTalle] = useState(null);
 
-    const onSelect = React.useCallback(
-        id => {
-            const newSelected = new Map(selected);
-            newSelected.set(id, !selected.get(id));
+    const renderItem = ({ item }) => {
+        const backgroundColor = item.id === selectedId ? '#FF464F' : 'white';
+        //const borderColor = item.id === selectedId ? '#FF464F' : 'gray';
 
-            setSelected(newSelected);
-            console.log(newSelected)
-        },
-        [selected],
 
-    );
 
+        return (
+            <Item
+                item={item}
+                onPress={() => [setSelectedId(item.id), setSelectedTalle(item.talle)]}
+                style={{ backgroundColor }}
+            />
+        );
+    };
+
+    const talle = selectedTalle
     const { nombre } = route.params;
     const { precio } = route.params;
     const { photo } = route.params;
@@ -96,32 +98,27 @@ export default function Views({ route, navigation }) {
 
                 <Text style={styles.producto}>{nombre}</Text>
                 <Text style={styles.price}>${JSON.stringify(precio)}</Text>
-                <Text style={styles.talles}>Talles dispoibles</Text>
+                <Text style={styles.talles}>Talles disponibles</Text>
 
+                <View style={{ position: "absolute", bottom: "5%", height: 90 }}>
 
-                <FlatList
-                    data={DATA}
-                    horizontal
-                    contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => (
-                        <Item
-                            id={item.id}
-                            talle={item.talle}
-                            selected={!!selected.get(item.id)}
-                            onSelect={onSelect}
-                        />
-                    )}
-                    keyExtractor={item => item.id}
-                    extraData={selected}
-                />
+                    <FlatList
+                        data={DATA}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                        extraData={selectedId}
+                        horizontal
+                        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
+                        showsHorizontalScrollIndicator={false}
+                    />
 
+                </View>
 
 
             </View>
             <View style={styles.box4}>
                 <Center>
-                    <TouchableOpacity style={styles.probar} onPress={() => navigation.navigate("Done")}>
+                    <TouchableOpacity style={styles.probar} onPress={() => [navigation.navigate("Done"), console.log(talle)]}>
                         <Center>
                             <Text style={styles.textProbar}>Probar ahora</Text>
                         </Center>
@@ -158,15 +155,16 @@ const styles = StyleSheet.create({
         flex: 4,
         alignItems: "center",
         justifyContent: "center",
+
     },
     //footer
     box3: {
         flex: 3.5,
         justifyContent: "center",
+
     },
     box4: {
         flex: 2.25,
-
         justifyContent: "center",
     },
 
@@ -218,13 +216,24 @@ const styles = StyleSheet.create({
     },
     item: {
         backgroundColor: 'white',
-        borderColor: "grey",
-        borderWidth: 3,
+        //borderColor: "grey",
+        //borderWidth: 3,
         marginHorizontal: 10,
         width: WINDOW_WIDTH / 7,
         height: WINDOW_WIDTH / 7,
         borderRadius: 60,
-        top: "240%"
+        bottom: "-25%",
+        //shadow
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.2,
+        shadowRadius: 9.51,
+
+        elevation: 15,
+
     },
     talle: {
         fontSize: 20,
@@ -242,7 +251,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 7,
         },
-        shadowOpacity: 0.43,
+        shadowOpacity: 0.5,
         shadowRadius: 9.51,
 
         elevation: 15,
@@ -265,7 +274,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 7,
         },
-        shadowOpacity: 0.43,
+        shadowOpacity: 0.5,
         shadowRadius: 9.51,
 
         elevation: 15,

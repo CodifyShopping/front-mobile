@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, FlatList, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import Lightbox from 'react-native-lightbox';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -8,9 +8,53 @@ import { Center } from "./Center";
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
 //NO SE USA POR AHORA. SE USA VIEWS
+const DATA = [
+    {
+        id: '1',
+        talle: 'S',
+    },
+    {
+        id: '2',
+        talle: 'M',
+    },
+    {
+        id: '3',
+        talle: 'L',
+    },
+    {
+        id: '4',
+        talle: 'XL',
+    },
+    {
+        id: '5',
+        talle: 'XXL',
+    },
+];
+
+const Item = ({ item, onPress, style }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+        <Center>
+            <Text style={styles.title}>{item.talle}</Text>
+        </Center>
+    </TouchableOpacity>
+);
+
 
 export default function Producto({ navigation }) {
+    const [selectedId, setSelectedId] = useState(null);
 
+    const renderItem = ({ item }) => {
+        const backgroundColor = item.id === selectedId ? '#FFA7AB' : 'white';
+        const borderColor = item.id === selectedId ? '#FF464F' : 'gray';
+
+        return (
+            <Item
+                item={item}
+                onPress={() => [setSelectedId(item.id)]}
+                style={{ backgroundColor, borderColor }}
+            />
+        );
+    };
     return (
         <Center>
             {/* <View style={(styles.viewFoto)}>
@@ -35,6 +79,14 @@ export default function Producto({ navigation }) {
 
             <Text style={styles.producto}>Remera azul</Text>
             <Text style={styles.descripcion}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquaLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</Text>
+
+            <FlatList
+                data={DATA}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                extraData={selectedId}
+                horizontal
+            />
 
             <TouchableOpacity style={styles.boton1} onPress={() => navigation.navigate("Views")} >
                 <Text style={styles.text2}>Volver a escanear</Text>
@@ -122,7 +174,20 @@ const styles = StyleSheet.create({
         color: "grey",
         fontWeight: "500",
         fontSize: 16
-    }
+    },
+    item: {
+        backgroundColor: 'white',
+        borderColor: "grey",
+        borderWidth: 3,
+        marginHorizontal: 10,
+        width: WINDOW_WIDTH / 7,
+        height: WINDOW_WIDTH / 7,
+        borderRadius: 60,
+        top: "240%"
+    },
+    title: {
+        fontSize: 20,
+    },
 
 
 });

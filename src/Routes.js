@@ -15,7 +15,7 @@ const Stack = createStackNavigator()
 export const Routes = ({ }) => {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }} >
                 <Stack.Screen name="Hola" component={Hola} />
                 <Stack.Screen name="Qr" component={Qr} />
                 <Stack.Screen name="Producto" component={Producto} />
