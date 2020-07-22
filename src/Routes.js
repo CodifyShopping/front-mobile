@@ -25,7 +25,7 @@ export const Routes = ({ }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        AsyncStorage.getItem("user")
+        AsyncStorage.getItem("token")
             .then(token => {
                 if (token) {
                     login();
@@ -63,10 +63,6 @@ export const Routes = ({ }) => {
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Register" component={Register} />
                 </Stack.Navigator>)}
-
-
-
-
         </NavigationContainer>
     );
 }

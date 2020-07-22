@@ -1,3 +1,3 @@
-import { Routes } from './src/Routes';
+import { Providers } from './src/providers/Providers';
 
-export default Routes;
+export default Providers;

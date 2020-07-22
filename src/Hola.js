@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
 import { Center } from "./Center";
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 
+import { AuthContext } from "./providers/AuthProvider";
 
 
 
@@ -32,10 +33,11 @@ import axios from 'axios';
 
 
 export default function Hola({ navigation }) {
+    const { logout } = useContext(AuthContext);
 
     const [LOCAL, setLocal] = useState([]);
 
-    fetchLocales = async () => {
+    const fetchLocales = async () => {
         axios.get("http://35.229.106.56:3000/returnLocal", { headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" } })
             .then((response) => {
                 //console.log(response.data)
@@ -97,7 +99,7 @@ export default function Hola({ navigation }) {
                         </TouchableOpacity>
 
                     </Center>
-
+                    <Button title="logout" onPress={() => logout()} />
                     <View style={styles.InsideBox22}>
                         <Center>
 
@@ -112,6 +114,7 @@ export default function Hola({ navigation }) {
                             />
                         </Center>
                     </View>
+
                 </View>
             </View>
 
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     Codify: {
         color: "white",
         fontWeight: "600",
-        fontSize: 52,
+        fontSize: 46,
         zIndex: 2,
         position: "absolute"
     },
@@ -207,7 +210,7 @@ const styles = StyleSheet.create({
     Bienvenido: {
         color: "black",
         fontWeight: "700",
-        fontSize: 38,
+        fontSize: 34,
         zIndex: 1,
         position: "absolute",
 
@@ -284,7 +287,7 @@ const styles = StyleSheet.create({
     Comercios: {
         color: "black",
         fontWeight: "700",
-        fontSize: 38,
+        fontSize: 34,
         zIndex: 1,
         position: "absolute",
         left: "10%",
