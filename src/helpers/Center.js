@@ -10,6 +10,7 @@ export const Center = ({ children }) => {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
+
         }}>
             {children}
         </View>

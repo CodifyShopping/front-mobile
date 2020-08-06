@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "./Center";
+import { Center } from "./helpers/Center";
 import { AuthContext } from './providers/AuthProvider';
 import axios from 'axios';
 //paquete para responsive. creo q es = a usar porcentajes

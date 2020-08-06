@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import { BarCodeScanner, requestPermissionsAsync } from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
 import { Center } from './helpers/Center';
 
-export default function Qr({ navigation }) {
+export default function QrFila({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
     //es para devolver diferentes botones en el caso de que haya error o no al concetarse al server
     const [correcto, setCorrecto] = useState(false);
     const [incorrecto, setIncorrecto] = useState(false);
-
-    const [nombr, setNombr] = useState("");
-    const [preci, setPreci] = useState(0);
-    const [foto, setFoto] = useState("");
-    const [talle, setTalle] = useState([])
 
     useEffect(() => {
         (async () => {
@@ -41,16 +36,8 @@ export default function Qr({ navigation }) {
 
 
                 })
+                .then((response) => {
 
-                .then(response => {
-
-                    setNombr(response.data["Nombre"])
-                    setPreci(response.data["Precio"])
-                    setFoto(response.data["Photo"])
-                    setTalle(response.data.Stock)
-                    console.log(response.data)
-                    console.log(response.data.Nombre);
-                    console.log(response.data.Precio);
                     setCorrecto(true)
 
                 },
@@ -126,9 +113,9 @@ export default function Qr({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, photo: foto, talle: talle }), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila"), setScanned(false), setCorrecto(false)]} >
                         <Center>
-                            <Text style={styles.text2}>Ver el producto</Text>
+                            <Text style={styles.text2}>Siguiente</Text>
                         </Center>
                     </TouchableOpacity>
                 )}

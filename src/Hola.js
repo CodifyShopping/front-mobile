@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { Center } from "./Center";
+import { Center } from "./helpers/Center";
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
@@ -84,23 +84,31 @@ export default function Hola({ navigation }) {
                         {/* <Text style={styles.text2}>Listo para comprar?</Text> */}
 
                         <TouchableOpacity style={styles.Escanear} onPress={() => [navigation.navigate("Qr")]}>
-                            <Center>
-                                <Text style={styles.textEscanear}>Escanear QR</Text>
-                                <Image style={styles.Icon} source={require("./assets/icons/scanIcon.png")}>
-                                </Image>
-                            </Center>
+                            <Text style={styles.textEscanear}>Ver producto</Text>
+                            <Image style={styles.Icon} source={require("./assets/icons/scanIcon.png")}>
+                            </Image>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.WishList} onPress={() => navigation.navigate("WishList")}>
-                            <Center>
-                                <Text style={styles.textWishlist} >Mi wish list</Text>
-                                <Image style={styles.Icon} source={require("./assets/icons/star.png")}></Image>
-                            </Center>
+                        <TouchableOpacity style={styles.Fila} onPress={() => [navigation.navigate("QrFila")]}>
+                            <Text style={styles.textFila}>Ingresar a cola</Text>
+                            <Image style={styles.Icon} source={require("./assets/icons/cola.png")}>
+                            </Image>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.WishList} onPress={() => navigation.navigate("Producto")}>
+                            <Text style={styles.textWishlist} >Mi wish list</Text>
+                            <Image style={styles.Icon} source={require("./assets/icons/star.png")}></Image>
                         </TouchableOpacity>
 
                     </Center>
+
+                    {/* BOTON PARA LOG OUT*/}
                     <Button title="logout" onPress={() => logout()} />
-                    <View style={styles.InsideBox22}>
+
+
+
+                    {/* SCROLL DE LOCALES CON CODIFY */}
+                    {/* <View style={styles.InsideBox22}>
                         <Center>
 
                             <Text style={styles.Comercios}>Comercios</Text>
@@ -113,7 +121,7 @@ export default function Hola({ navigation }) {
                                 contentContainerStyle={{ paddingLeft: 30, paddingRight: 30, }}
                             />
                         </Center>
-                    </View>
+                    </View> */}
 
                 </View>
             </View>
@@ -203,7 +211,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 60
     },
     InsideBox22: {
-        backgroundColor: "white",
+        backgroundColor: "black",
         flex: 0.6,
 
     },
@@ -231,9 +239,43 @@ const styles = StyleSheet.create({
     Escanear: {
         width: "81%",
         height: 120,
+        backgroundColor: "#FF313B",
+        borderRadius: 24,
+        //top: 10,
+
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: "8%",
+        marginTop: "8%",
+
+        //shadows
+        shadowColor: "#FF313B",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.43,
+        shadowRadius: 9.51,
+
+    },
+    textEscanear: {
+        color: "white",
+        fontWeight: "600",
+        fontSize: 24,
+        zIndex: 1,
+
+
+    },
+    Fila: {
+        width: "81%",
+        height: 120,
         backgroundColor: "#FF464F",
         borderRadius: 24,
-        top: 10,
+        //top: 25,
+
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: "8%",
 
         //shadows
         shadowColor: "#FF464F",
@@ -243,21 +285,21 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.43,
         shadowRadius: 9.51,
-        elevation: 15,
+
     },
-    textEscanear: {
+    textFila: {
         color: "white",
         fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
-
+        left: "2%"
     },
 
     Icon: {
         width: 35,
         height: 35,
         position: "absolute",
-        left: 30,
+        left: 25,
     },
 
     WishList: {
@@ -265,7 +307,12 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: "#FFC542",
         borderRadius: 24,
-        top: 40,
+        //top: 40,
+
+        justifyContent: "center",
+        alignItems: "center",
+
+
         //shadows
         shadowColor: "#FFC542",
         shadowOffset: {
@@ -274,7 +321,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.43,
         shadowRadius: 9.51,
-        elevation: 15,
+
 
     },
     textWishlist: {

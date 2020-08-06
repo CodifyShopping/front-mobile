@@ -1,19 +1,20 @@
-import React from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert } from 'react-native';
 import { Center } from "./helpers/Center";
 import LottieView from 'lottie-react-native'
 
-export default function Done({ navigation }) {
+export default function FinishFila({ navigation }) {
+
     return (
 
         <Center>
-            <Text style={styles.producto}>Producto solicitado</Text>
+            <Text style={styles.producto}>Es tu turno!</Text>
             <LottieView source={require('./assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
 
-            <Text style={styles.text2}>Dentro de poco te lo estaran{"\n"} trayendo</Text>
+            <Text style={styles.text2}>Acercate a la caja y pagá</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Hola")}>
                 <Center>
-                    <Text style={styles.text3}>Volver a Home</Text>
+                    <Text style={styles.text3}>Listo</Text>
                 </Center>
             </TouchableOpacity>
 

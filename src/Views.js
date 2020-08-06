@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
-import { Center } from "./Center";
+import { View, Text, Alert, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
+import { Center } from "./helpers/Center";
 import { AntDesign } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
+// import { color } from 'react-native-reanimated';
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
+//console.disableYellowBox = true;
+/*
+*/
 
+/*
 const DATA = [
-    // {
-    //     id: '0',
-    //     talle: 'XS',
-    // },
+    {
+        id: '0',
+        talle: 'XS',
+    },
     {
         id: '1',
         talle: 'S',
@@ -35,7 +39,7 @@ const DATA = [
         id: '5',
         talle: 'XXL',
     },
-];
+];*/
 
 const Item = ({ item, onPress, style }) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
@@ -50,21 +54,37 @@ export default function Views({ route, navigation }) {
     const [selectedTalle, setSelectedTalle] = useState(null);
 
     const renderItem = ({ item }) => {
-        const backgroundColor = item.id === selectedId ? '#FF464F' : 'white';
-        //const borderColor = item.id === selectedId ? '#FF464F' : 'gray';
+        const backgroundColor = item.talle === selectedId ? '#FF464F' : 'white';
+
+        if (item.cantidad > 0) {
+            return (
+                <Item
+                    item={item}
+                    onPress={() => [setSelectedId(item.talle)]}
+                    style={{ backgroundColor }}
+                />)
+        }
+        else if (item.cantidad <= 0) {
+            return (
+                <Item
+                    item={item}
+                    style={{ backgroundColor: "grey" }}
+
+                />)
+        }
 
 
-
-        return (
-            <Item
-                item={item}
-                onPress={() => [setSelectedId(item.id), setSelectedTalle(item.talle)]}
-                style={{ backgroundColor }}
-            />
-        );
     };
 
-    const talle = selectedTalle
+    //const talle = selectedTalle
+    const { talle } = route.params;
+    //console.log(JSON.stringify(talle))
+    const DATA = talle
+    console.log(DATA)
+    //const NAME = JSON.stringify({ talle })
+    // const F = NAME.slice("10", NAME.length - 2)
+    // console.log(F)
+
     const { nombre } = route.params;
     const { precio } = route.params;
     const { photo } = route.params;
@@ -82,7 +102,6 @@ export default function Views({ route, navigation }) {
 
                 <Lightbox springConfig={{ tension: 100, friction: 8 }}
                     style={styles.lightbox}
-
                     underlayColor="white" >
                     <Image
                         style={styles.square}
@@ -105,7 +124,7 @@ export default function Views({ route, navigation }) {
                     <FlatList
                         data={DATA}
                         renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.talle}
                         extraData={selectedId}
                         horizontal
                         contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
@@ -118,7 +137,17 @@ export default function Views({ route, navigation }) {
             </View>
             <View style={styles.box4}>
                 <Center>
-                    <TouchableOpacity style={styles.probar} onPress={() => [navigation.navigate("Done"), console.log(talle)]}>
+                    <TouchableOpacity style={styles.probar} onPress={() => {
+                        selectedId ? ([navigation.navigate("Done"), console.log(talle)]) : (Alert.alert(
+                            "Cuidado",
+                            "No selecionaste una talla",
+                            [
+
+                                { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                            ],
+                            { cancelable: false }
+                        ))
+                    }}>
                         <Center>
                             <Text style={styles.textProbar}>Probar ahora</Text>
                         </Center>

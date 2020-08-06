@@ -3,32 +3,38 @@ import { View, Text, Button, FlatList, StyleSheet, Image, Dimensions, TouchableO
 import Lightbox from 'react-native-lightbox';
 import { AntDesign } from '@expo/vector-icons';
 
-import { Center } from "./Center";
+import { Center } from "./helpers/Center";
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
 //NO SE USA POR AHORA. SE USA VIEWS
 const DATA = [
-    {
-        id: '1',
-        talle: 'S',
-    },
-    {
-        id: '2',
-        talle: 'M',
-    },
-    {
-        id: '3',
-        talle: 'L',
-    },
-    {
-        id: '4',
-        talle: 'XL',
-    },
-    {
-        id: '5',
-        talle: 'XXL',
-    },
+    //     {
+
+    //         "id": "s",
+    //         cantidad: "0",
+    //         "talle": 'S',
+    //     },
+    //     {
+    //         id: "m",
+    //         cantidad: '2',
+    //         "talle": 'M',
+    //     },
+    //     {
+    //         id: 3,
+    //         cantidad: '2',
+    //         talle: 'L',
+    //     },
+    //     {
+    //         id: 4,
+    //         cantidad: '4',
+    //         talle: 'XL',
+    //     },
+    //     {
+    //         id: 5,
+    //         cantidad: '5',
+    //         talle: 'XXL',
+    //     },
 ];
 
 const Item = ({ item, onPress, style }) => (
@@ -40,21 +46,35 @@ const Item = ({ item, onPress, style }) => (
 );
 
 
-export default function Producto({ navigation }) {
+export default function Producto({ route, navigation }) {
     const [selectedId, setSelectedId] = useState(null);
 
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? '#FFA7AB' : 'white';
         const borderColor = item.id === selectedId ? '#FF464F' : 'gray';
 
-        return (
-            <Item
-                item={item}
-                onPress={() => [setSelectedId(item.id)]}
-                style={{ backgroundColor, borderColor }}
-            />
-        );
+        if (item.cantidad > 0) {
+            return (
+                <Item
+                    item={item}
+                    onPress={() => [setSelectedId(item.id)]}
+                    style={{ backgroundColor, borderColor }}
+                />)
+        }
+        else if (item.cantidad <= 0) {
+            return (
+                <Item
+                    item={item}
+                    style={{ backgroundColor: "grey" }}
+
+                />)
+        }
     };
+
+
+    const { talle } = route.params;
+
+
     return (
         <Center>
             {/* <View style={(styles.viewFoto)}>

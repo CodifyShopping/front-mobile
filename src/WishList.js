@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-import { Center } from "./Center";
+import { Center } from "./helpers/Center";
 
 export default function WishList({ navigation }) {
     return (

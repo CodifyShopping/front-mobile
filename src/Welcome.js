@@ -4,7 +4,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { TouchableOpacity, StyleSheet, Image } from 'react-native'
-import { Center } from "./Center"
+import { Center } from "./helpers/Center"
 
 const styles = StyleSheet.create({
     wrapper: {},

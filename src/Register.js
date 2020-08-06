@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedback, Keyboard, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "./Center";
+import { Center } from "./helpers/Center";
 import axios from 'axios';
 import { AntDesign } from '@expo/vector-icons';
 
