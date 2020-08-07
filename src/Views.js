@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
+import { View, Text, Alert, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, AsyncStorage } from 'react-native';
 import { Center } from "./helpers/Center";
 import { AntDesign } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
 // import { color } from 'react-native-reanimated';
+import axios from 'axios';
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -51,7 +52,7 @@ const Item = ({ item, onPress, style }) => (
 
 export default function Views({ route, navigation }) {
     const [selectedId, setSelectedId] = useState(null);
-    const [selectedTalle, setSelectedTalle] = useState(null);
+    const [token, setToken] = useState(null);
 
     const renderItem = ({ item }) => {
         const backgroundColor = item.talle === selectedId ? '#FF464F' : 'white';
@@ -69,12 +70,58 @@ export default function Views({ route, navigation }) {
                 <Item
                     item={item}
                     style={{ backgroundColor: "grey" }}
+                    onPress={() => {
+                        Alert.alert(
+                            "Sin Stock",
+                            "No tenemos stock en este talle",
+                            [
 
+                                { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                            ],
+                            { cancelable: false }
+                        )
+                    }}
                 />)
         }
 
 
     };
+
+
+    const handleToken = async () => {
+        AsyncStorage.getItem('token', (err, result) => {
+            console.log(result);
+        })
+
+    }
+
+
+    const sendI = async () => {
+        handleToken()
+        axios.post('http://35.229.106.56:3000/reqProducto',
+            {
+                Productid: id,
+                talle: selectedId
+
+
+            },
+            {
+                headers: { token: "eyJhbGciOiJIUzI1NiJ9.NWYyY2JiZDRlYmRmYTczMmEwY2I0NjYz.SLIRjhAvAWNRkhT6w7Iko0cZHRdM_DOW6QKnEnY5D44" }
+
+            })
+
+            .then(() => {
+
+                navigation.navigate("Done")
+
+            },
+
+                (error) => {
+                    console.log(error);
+                });
+
+    }
+
 
     //const talle = selectedTalle
     const { talle } = route.params;
@@ -88,7 +135,7 @@ export default function Views({ route, navigation }) {
     const { nombre } = route.params;
     const { precio } = route.params;
     const { photo } = route.params;
-
+    const { id } = route.params;
 
     return (
 
@@ -138,7 +185,8 @@ export default function Views({ route, navigation }) {
             <View style={styles.box4}>
                 <Center>
                     <TouchableOpacity style={styles.probar} onPress={() => {
-                        selectedId ? ([navigation.navigate("Done"), console.log(talle)]) : (Alert.alert(
+                        selectedId ? ([sendI(), console.log(selectedId)
+                        ]) : (Alert.alert(
                             "Cuidado",
                             "No selecionaste una talla",
                             [

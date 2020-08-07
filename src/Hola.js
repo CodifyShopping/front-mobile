@@ -35,21 +35,21 @@ import { AuthContext } from "./providers/AuthProvider";
 export default function Hola({ navigation }) {
     const { logout } = useContext(AuthContext);
 
-    const [LOCAL, setLocal] = useState([]);
+    //const [LOCAL, setLocal] = useState([]);
 
-    const fetchLocales = async () => {
-        axios.get("http://35.229.106.56:3000/returnLocal", { headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" } })
-            .then((response) => {
-                //console.log(response.data)
-                setLocal(response.data)
-                console.log(LOCAL)
+    // const fetchLocales = async () => {
+    //     axios.get("http://35.229.106.56:3000/returnLocal", { headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" } })
+    //         .then((response) => {
+    //             //console.log(response.data)
+    //             setLocal(response.data)
+    //             console.log(LOCAL)
 
-            })
-    }
+    //         })
+    // }
 
-    useEffect(() => {
-        fetchLocales()
-    }, []);
+    // useEffect(() => {
+    //     fetchLocales()
+    // }, []);
 
     function Item({ NombreLocal }) {
 
@@ -103,7 +103,7 @@ export default function Hola({ navigation }) {
                     </Center>
 
                     {/* BOTON PARA LOG OUT*/}
-                    <Button title="logout" onPress={() => logout()} />
+                    {/* <Button title="logout" onPress={() => logout()} /> */}
 
 
 

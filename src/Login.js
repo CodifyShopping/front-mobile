@@ -25,8 +25,8 @@ export default function Login({ navigation }) {
         })
             .then((response) => {
                 console.log(response.data)
-                loginHandle(response.data)
-
+                const token = (response.data)
+                login(token)
             },
 
                 (error) => {
@@ -35,9 +35,9 @@ export default function Login({ navigation }) {
                 });
     }
 
-    const loginHandle = (token) => {
-        login(token)
-    }
+    // const loginHandle = (token) => {
+    //     login(token)
+    // }
 
     return (
         <TouchableWithoutFeedback onPress={() => {

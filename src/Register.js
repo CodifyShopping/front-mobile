@@ -11,9 +11,11 @@ export default function Register({ navigation }) {
 
 
     const fetchRegister = async () => {
+        console.log(nombre)
         console.log(email)
         console.log(password)
         axios.post("http://35.229.106.56:3000/auth/client/register", {
+            Nombre: nombre,
             email: email,
             password: password
         })
@@ -58,7 +60,7 @@ export default function Register({ navigation }) {
                                 <TextInput
                                     style={{ height: 50, left: "20%", fontSize: 20 }}
                                     placeholder="Nombre"
-                                    onChangeText={text => setEmail(text)}
+                                    onChangeText={text => setNombre(text)}
 
                                 />
                             </View>

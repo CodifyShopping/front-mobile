@@ -13,16 +13,16 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             user,
             login: (token) => {
-                const User = { userName: token }
+                const User = { token: token }
                 console.log(User)
                 setUser(User)
-                AsyncStorage.setItem("token", JSON.stringify(User))
+                AsyncStorage.setItem('token', JSON.stringify(User))
 
 
             },
             logout: () => {
                 setUser(null)
-                AsyncStorage.removeItem("token")
+                AsyncStorage.removeItem('token')
             }
         }}>
             {children}
