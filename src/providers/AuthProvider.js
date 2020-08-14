@@ -7,13 +7,14 @@ export const AuthContext = React.createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
 
     return (
 
         <AuthContext.Provider value={{
-            user,
+            user,token,
             login: (token) => {
-                const User = { token: token }
+                const User =  {token:token}
                 console.log(User)
                 setUser(User)
                 AsyncStorage.setItem('token', JSON.stringify(User))
@@ -23,6 +24,10 @@ export const AuthProvider = ({ children }) => {
             logout: () => {
                 setUser(null)
                 AsyncStorage.removeItem('token')
+            },
+            getToken:(token)=>{
+                const User =  {token}
+                setUser(User)
             }
         }}>
             {children}

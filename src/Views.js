@@ -6,6 +6,8 @@ import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
 // import { color } from 'react-native-reanimated';
 import axios from 'axios';
+import LottieView from 'lottie-react-native'
+
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -52,7 +54,9 @@ const Item = ({ item, onPress, style }) => (
 
 export default function Views({ route, navigation }) {
     const [selectedId, setSelectedId] = useState(null);
-    const [token, setToken] = useState(null);
+    const [token1, setToken] = useState(null);
+    const [wish, setWish] = useState(null);
+
 
     const renderItem = ({ item }) => {
         const backgroundColor = item.talle === selectedId ? '#FF464F' : 'white';
@@ -88,25 +92,33 @@ export default function Views({ route, navigation }) {
     };
 
 
-    const handleToken = async () => {
-        AsyncStorage.getItem('token', (err, result) => {
-            console.log(result);
-        })
+useEffect(()=>{
+    handleToken()
+},[])
 
-    }
 
+const handleToken = async () => {
+    await AsyncStorage.getItem('token', (err, result) => {
+        const pre =  result
+       const sliced = pre.slice("10", pre.length-2)
+        console.log(sliced)
+        setToken(sliced)
+    })
+
+}
 
     const sendI = async () => {
         handleToken()
-        axios.post('http://35.229.106.56:3000/reqProducto',
+        axios.post('http://35.229.106.56:3000/reqProducto/client',
             {
-                Productid: id,
+                //I mayus
+                ProductId: id,
                 talle: selectedId
 
 
             },
             {
-                headers: { token: "eyJhbGciOiJIUzI1NiJ9.NWYyY2JiZDRlYmRmYTczMmEwY2I0NjYz.SLIRjhAvAWNRkhT6w7Iko0cZHRdM_DOW6QKnEnY5D44" }
+                headers: { token: token1 }
 
             })
 
@@ -122,6 +134,32 @@ export default function Views({ route, navigation }) {
 
     }
 
+    const addWsihlist = async () => {
+        handleToken()
+        axios.post('http://35.229.106.56:3000/wishlist/add',
+            {
+                //I mayus
+                ProductId: id
+
+
+            },
+            {
+                headers: { token: token1 }
+
+            })
+
+            .then((response) => {
+
+                console.log(response.data)
+                setWish(true)
+
+            },
+
+                (error) => {
+                    console.log(error);
+                });
+
+    }
 
     //const talle = selectedTalle
     const { talle } = route.params;
@@ -129,7 +167,7 @@ export default function Views({ route, navigation }) {
     const DATA = talle
     console.log(DATA)
     //const NAME = JSON.stringify({ talle })
-    // const F = NAME.slice("10", NAME.length - 2)
+    // const F = NAME.slice("10", NAME.length)
     // console.log(F)
 
     const { nombre } = route.params;
@@ -200,9 +238,18 @@ export default function Views({ route, navigation }) {
                             <Text style={styles.textProbar}>Probar ahora</Text>
                         </Center>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.addWish} onPress={() => navigation.navigate("WishList")} >
+                    <TouchableOpacity style={styles.addWish} onPress={() => [ addWsihlist()]} >
                         <Center >
-                            <Text style={styles.textAddWish}>Agregar a{"\n"}  Wishlist</Text>
+                            {!wish&&(
+                                <Text style={styles.textAddWish}>Agregar a{"\n"}  Wishlist</Text>
+                            )
+
+                            }
+                            {wish&&(
+                                 <LottieView source={require('./assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
+                            )}
+                            
+                            
                         </Center>
                     </TouchableOpacity>
                 </Center>
@@ -254,7 +301,7 @@ const styles = StyleSheet.create({
     },
 
     square: {
-        width: WINDOW_WIDTH / 1.3,
+        width: WINDOW_WIDTH / 1.25,
         height: WINDOW_WIDTH / 1.3,
         justifyContent: 'center',
         alignSelf: 'center',
@@ -320,7 +367,7 @@ const styles = StyleSheet.create({
         height: 80,
         backgroundColor: "#FF464F",
         borderRadius: 24,
-        left: "4%",
+        right: "4%",
         top: "20%",
         position: "absolute",
         shadowColor: "#FF464F",
@@ -345,7 +392,7 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         top: "20%",
         position: "absolute",
-        right: "4%",
+        left: "4%",
         shadowColor: "#FFC542",
         shadowOffset: {
             width: 0,

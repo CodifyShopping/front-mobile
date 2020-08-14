@@ -95,7 +95,7 @@ export default function Hola({ navigation }) {
                             </Image>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.WishList} onPress={() => navigation.navigate("Producto")}>
+                        <TouchableOpacity style={styles.WishList} onPress={() => navigation.navigate("WishList")}>
                             <Text style={styles.textWishlist} >Mi wish list</Text>
                             <Image style={styles.Icon} source={require("./assets/icons/star.png")}></Image>
                         </TouchableOpacity>

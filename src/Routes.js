@@ -25,14 +25,17 @@ import { Center } from "./helpers/Center"
 const Stack = createStackNavigator()
 
 export const Routes = ({ }) => {
-    const { user, login } = useContext(AuthContext)
+    const { user, getToken
+    } = useContext(AuthContext)
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         AsyncStorage.getItem("token")
             .then(token => {
                 if (token) {
-                    login();
+                    //nuevo cambio
+                    console.log(token)
+                    getToken();
                 }
 
                 setLoading(false)

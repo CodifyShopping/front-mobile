@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
+import { View, Alert,Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
 import { Center } from "./helpers/Center";
 import { AuthContext } from './providers/AuthProvider';
 import axios from 'axios';
@@ -31,6 +31,15 @@ export default function Login({ navigation }) {
 
                 (error) => {
                     console.log(error);
+                    Alert.alert(
+                        "Error al iniciar sesion",
+                        "Tu mail o contraseña no son correctos",
+                        [
+
+                            { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                        ],
+                        { cancelable: false }
+                    )
 
                 });
     }
@@ -66,7 +75,7 @@ export default function Login({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("./assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20 }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, width:"80%" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
                                 />
@@ -74,7 +83,7 @@ export default function Login({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("./assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20 }}
+                                    style={{ height: 50, left: "20%", fontSize: 20,width:"80%" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
