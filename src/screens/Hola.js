@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
-
-import { AuthContext } from "./providers/AuthProvider";
+import { AuthContext } from "../providers/AuthProvider";
 
 
 
@@ -62,6 +61,8 @@ export default function Hola({ navigation }) {
         );
     }
 
+
+
     return (
         <View style={styles.container}>
             <View style={styles.box1}>
@@ -85,19 +86,19 @@ export default function Hola({ navigation }) {
 
                         <TouchableOpacity style={styles.Escanear} onPress={() => [navigation.navigate("Qr")]}>
                             <Text style={styles.textEscanear}>Ver producto</Text>
-                            <Image style={styles.Icon} source={require("./assets/icons/scanIcon.png")}>
+                            <Image style={styles.Icon} source={require("../assets/icons/scanIcon.png")}>
                             </Image>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.Fila} onPress={() => [navigation.navigate("QrFila")]}>
-                            <Text style={styles.textFila}>Ingresar a cola</Text>
-                            <Image style={styles.Icon} source={require("./assets/icons/cola.png")}>
+                            <Text style={styles.textFila}>Fila virtual</Text>
+                            <Image style={styles.Icon} source={require("../assets/icons/cola.png")}>
                             </Image>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.WishList} onPress={() => navigation.navigate("WishList")}>
                             <Text style={styles.textWishlist} >Mi wish list</Text>
-                            <Image style={styles.Icon} source={require("./assets/icons/star.png")}></Image>
+                            <Image style={styles.Icon} source={require("../assets/icons/star.png")}></Image>
                         </TouchableOpacity>
 
                     </Center>
@@ -131,6 +132,7 @@ export default function Hola({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         flexDirection: 'column'
@@ -155,7 +157,9 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         fontSize: 46,
         zIndex: 2,
-        position: "absolute"
+        position: "absolute",
+        fontFamily: "Montserrat_700Bold"
+
     },
 
     //cuadrados diseño
@@ -218,12 +222,12 @@ const styles = StyleSheet.create({
     Bienvenido: {
         color: "black",
         fontWeight: "700",
-        fontSize: 34,
+        fontSize: 32,
         zIndex: 1,
         position: "absolute",
-
         top: "7%",
-        left: "10%"
+        left: "10%",
+        fontFamily: "Montserrat_600SemiBold"
     },
     text2: {
         color: "#BFBFBF",
@@ -244,7 +248,6 @@ const styles = StyleSheet.create({
         //top: 10,
 
         justifyContent: "center",
-        alignItems: "center",
         marginBottom: "8%",
         marginTop: "8%",
 
@@ -260,10 +263,10 @@ const styles = StyleSheet.create({
     },
     textEscanear: {
         color: "white",
-        fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
-
+        fontFamily: "Poppins_600SemiBold",
+        left: "28%"
 
     },
     Fila: {
@@ -274,7 +277,7 @@ const styles = StyleSheet.create({
         //top: 25,
 
         justifyContent: "center",
-        alignItems: "center",
+
         marginBottom: "8%",
 
         //shadows
@@ -289,10 +292,11 @@ const styles = StyleSheet.create({
     },
     textFila: {
         color: "white",
-        fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
-        left: "2%"
+        left: "2%",
+        fontFamily: "Poppins_600SemiBold",
+        left: "28%"
     },
 
     Icon: {
@@ -310,8 +314,6 @@ const styles = StyleSheet.create({
         //top: 40,
 
         justifyContent: "center",
-        alignItems: "center",
-
 
         //shadows
         shadowColor: "#FFC542",
@@ -326,9 +328,10 @@ const styles = StyleSheet.create({
     },
     textWishlist: {
         color: "white",
-        fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
+        fontFamily: "Poppins_600SemiBold",
+        left: "28%"
 
     },
     Comercios: {
@@ -363,10 +366,5 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         color: "white"
     },
-
-
-
-
-
 
 });

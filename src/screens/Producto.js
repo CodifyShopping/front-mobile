@@ -3,7 +3,7 @@ import { View, Text, Button, FlatList, StyleSheet, Image, Dimensions, TouchableO
 import Lightbox from 'react-native-lightbox';
 import { AntDesign } from '@expo/vector-icons';
 
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -93,7 +93,7 @@ export default function Producto({ route, navigation }) {
                 <Image
                     style={styles.square}
                     resizeMode="contain"
-                    source={require("./assets/img/shoe3.jpg")}
+                    source={require("../assets/img/shoe3.jpg")}
                 />
             </Lightbox>
 

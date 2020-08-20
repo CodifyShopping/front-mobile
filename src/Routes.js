@@ -4,23 +4,29 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native"
 import { ActivityIndicator } from 'react-native';
 
-import Hola from "./Hola";
-import Qr from "./Qr";
-import QrFila from "./QrFila"
-import Producto from "./Producto"
-import Views from "./Views"
-import WishList from "./WishList"
-import Done from "./Done"
-import PreFila from "./PreFila"
-import WaitFila from "./WaitFila"
-import FinishFila from "./FinishFila"
+import Hola from "./screens/Hola";
+import Qr from "./screens/Qr";
+import QrFila from "./screens/QrFila"
+import Producto from "./screens/Producto"
+import Views from "./screens/Views"
+import WishList from "./screens/WishList"
+import Done from "./screens/Done"
+import PreFila from "./screens/PreFila"
+import WaitFila from "./screens/WaitFila"
+import FinishFila from "./screens/FinishFila"
 
-import Welcome from "./Welcome"
-import Login from "./Login"
-import Register from "./Register"
+import Welcome from "./screens/Welcome"
+import Login from "./screens/Login"
+import Register from "./screens/Register"
+
 import { AuthContext } from "./providers/AuthProvider"
 
 import { Center } from "./helpers/Center"
+
+//fonts
+import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
+import { Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { AppLoading } from 'expo';
 
 const Stack = createStackNavigator()
 
@@ -46,12 +52,20 @@ export const Routes = ({ }) => {
             });
     }, [])
 
+    let [fontsLoaded] = useFonts({
+        Montserrat_700Bold, Montserrat_600SemiBold, Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold
+    });
+
     if (loading) {
         return (
             <Center>
                 <ActivityIndicator size="large" />
             </Center>
         )
+    }
+
+    if (!fontsLoaded) {
+        return <AppLoading />;
     }
 
     return (

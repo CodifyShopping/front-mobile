@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedback, Keyboard, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import axios from 'axios';
-import { AntDesign } from '@expo/vector-icons';
 
 export default function Register({ navigation }) {
     const [nombre, setNombre] = useState('')
@@ -56,27 +55,27 @@ export default function Register({ navigation }) {
                         <Center>
                             <Text style={styles.Registrarse}>Registrarse</Text>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("./assets/icons/user.png")}></Image>
+                                <Image style={styles.Icon} source={require("../assets/icons/user.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20 }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
                                     placeholder="Nombre"
                                     onChangeText={text => setNombre(text)}
 
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("./assets/icons/mail.png")}></Image>
+                                <Image style={styles.Icon} source={require("../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20 }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
 
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("./assets/icons/Lock.png")}></Image>
+                                <Image style={styles.Icon} source={require("../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20 }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -120,10 +119,9 @@ const styles = StyleSheet.create({
     },
     Bienvenido: {
         color: "white",
-        fontWeight: "600",
-        fontSize: 46,
+        fontSize: 44,
         zIndex: 2,
-
+        fontFamily: "Montserrat_700Bold"
     },
 
     //cuadrados diseño
@@ -180,10 +178,10 @@ const styles = StyleSheet.create({
     },
     Registrarse: {
         color: "black",
-        fontWeight: "700",
-        fontSize: 40,
+        fontSize: 36,
         zIndex: 2,
-        bottom: "9%"
+        bottom: "9%",
+        fontFamily: "Montserrat_700Bold"
 
     },
     txtInput: {
@@ -226,9 +224,9 @@ const styles = StyleSheet.create({
     },
     txtRegister: {
         color: "white",
-        fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
+        fontFamily: "Poppins_600SemiBold"
 
     },
 })

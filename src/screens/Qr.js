@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner, requestPermissionsAsync } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
-import { Center } from './helpers/Center';
+import { Center } from '../helpers/Center';
 
-export default function QrFila({ navigation }) {
+export default function Qr({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
     //es para devolver diferentes botones en el caso de que haya error o no al concetarse al server
     const [correcto, setCorrecto] = useState(false);
     const [incorrecto, setIncorrecto] = useState(false);
+
+    const [nombr, setNombr] = useState("");
+    const [preci, setPreci] = useState(0);
+    const [foto, setFoto] = useState("");
+    const [talle, setTalle] = useState([])
+    const [id, setId] = useState("")
 
     useEffect(() => {
         (async () => {
@@ -20,35 +26,40 @@ export default function QrFila({ navigation }) {
         })();
     }, []);
 
-    useEffect(() => {
-        console.log('useEffect has been called!');
+    const fetchProduct = async (data) => {
 
-        fetchProduct = async (data) => {
-
-            axios.post('http://35.229.106.56:3000/returnProdCli',
-                {
-                    id: data
-                },
-                {
-                    headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" },
+        axios.post('http://35.229.106.56:3000/returnProdCli',
+            {
+                id: data
+            },
+            {
+                headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" },
 
 
 
 
-                })
-                .then((response) => {
+            })
 
-                    setCorrecto(true)
+            .then(response => {
 
-                },
+                setNombr(response.data["Nombre"])
+                setPreci(response.data["Precio"])
+                setFoto(response.data["Photo"])
+                setTalle(response.data.Stock)
+                setId(response.data._id)
+                console.log(response.data._id)
+                console.log(response.data.Nombre);
+                console.log(response.data.Precio);
+                setCorrecto(true)
 
-                    (error) => {
-                        console.log(error);
-                        setIncorrecto(true)
-                    });
-        }
+            },
 
-    }, []); //Pass Array as second argument
+                (error) => {
+                    console.log(error);
+                    setIncorrecto(true)
+                });
+    }
+
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
@@ -81,8 +92,6 @@ export default function QrFila({ navigation }) {
     //     this.functionTwo();
     // }
 
-
-
     return (
 
         <View
@@ -113,9 +122,9 @@ export default function QrFila({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila"), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, photo: foto, talle: talle, id: id }), setScanned(false), setCorrecto(false)]} >
                         <Center>
-                            <Text style={styles.text2}>Siguiente</Text>
+                            <Text style={styles.text2}>Ver el producto</Text>
                         </Center>
                     </TouchableOpacity>
                 )}
@@ -187,12 +196,12 @@ const styles = StyleSheet.create({
 
         color: "white",
         fontSize: 24,
-        fontWeight: "600"
+        fontFamily: "Poppins_600SemiBold",
     },
     text2: {
         color: "black",
         position: "absolute",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 18
     }
 

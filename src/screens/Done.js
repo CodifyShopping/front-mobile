@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import LottieView from 'lottie-react-native'
 
 export default function Done({ navigation }) {
     return (
 
         <Center>
-            <Text style={styles.producto}>Producto solicitado</Text>
-            <LottieView source={require('./assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
+            <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.text1}> Producto solicitado </Text>
+            <LottieView source={require('../assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
 
-            <Text style={styles.text2}>Dentro de poco te lo estaran{"\n"} trayendo</Text>
+            <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.text2}>Dentro de poco te lo estaran trayendo</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Hola")}>
                 <Center>
                     <Text style={styles.text3}>Volver a Home</Text>
@@ -23,15 +23,15 @@ export default function Done({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    producto: {
+    text1: {
         color: "black",
-        fontWeight: "800",
-        fontSize: 34,
+        fontFamily: "Montserrat_700Bold",
+        fontSize: 32,
         marginBottom: "5%"
     },
     text2: {
         color: "black",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 22,
         marginTop: "8%",
         textAlign: 'center',
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     },
     text3: {
         color: "white",
-        fontWeight: "600",
-        fontSize: 24,
+        fontFamily: "Poppins_600SemiBold",
+        fontSize: 22,
 
     },
 })

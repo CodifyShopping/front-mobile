@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import LottieView from 'lottie-react-native'
 
 export default function FinishFila({ navigation }) {
@@ -8,8 +8,8 @@ export default function FinishFila({ navigation }) {
     return (
 
         <Center>
-            <Text style={styles.producto}>Es tu turno!</Text>
-            <LottieView source={require('./assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
+            <Text style={styles.text1}>Es tu turno!</Text>
+            <LottieView source={require('../assets/animated-icon/done.json')} autoPlay={true} loop={false} style={{ height: 300 }} />
 
             <Text style={styles.text2}>Acercate a la caja y pagá</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Hola")}>
@@ -24,15 +24,15 @@ export default function FinishFila({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    producto: {
+    text1: {
         color: "black",
-        fontWeight: "800",
+        fontFamily: "Montserrat_700Bold",
         fontSize: 34,
         marginBottom: "5%"
     },
     text2: {
         color: "black",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 22,
         marginTop: "8%",
         textAlign: 'center',
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     text3: {
         color: "white",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 24,
 
     },

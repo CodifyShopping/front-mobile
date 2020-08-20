@@ -1,14 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Alert,Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "./helpers/Center";
-import { AuthContext } from './providers/AuthProvider';
+import { View, Alert, Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
+import { Center } from "../helpers/Center";
+import { AuthContext } from '../providers/AuthProvider';
 import axios from 'axios';
-//paquete para responsive. creo q es = a usar porcentajes
-import {
-    responsiveHeight,
-    responsiveWidth,
-    responsiveFontSize
-} from "react-native-responsive-dimensions";
+
 
 export default function Login({ navigation }) {
     const { login } = useContext(AuthContext)
@@ -44,6 +39,8 @@ export default function Login({ navigation }) {
                 });
     }
 
+
+
     // const loginHandle = (token) => {
     //     login(token)
     // }
@@ -73,17 +70,17 @@ export default function Login({ navigation }) {
                         <Center>
                             <Text style={styles.Iniciar}>Iniciar sesion</Text>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("./assets/icons/mail.png")}></Image>
+                                <Image style={styles.Icon} source={require("../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, width:"80%" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, width: "80%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("./assets/icons/Lock.png")}></Image>
+                                <Image style={styles.Icon} source={require("../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20,width:"80%" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, width: "80%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -97,7 +94,7 @@ export default function Login({ navigation }) {
                                 </Center>
                             </TouchableOpacity>
                             <View style={{ top: "8%" }}>
-                                <Button title="No tengo cuenta, registrarme" color="grey" onPress={() => { navigation.navigate("Register") }}></Button>
+                                <Button title="No tengo cuenta, registrarme" color="grey" titleStyle={{ fontFamily: "Poppins_400Regular" }} onPress={() => { navigation.navigate("Register") }}></Button>
                             </View>
                         </Center>
                     </View>
@@ -128,10 +125,9 @@ const styles = StyleSheet.create({
     },
     Bienvenido: {
         color: "white",
-        fontWeight: "600",
-        fontSize: 46,
+        fontSize: 44,
         zIndex: 2,
-
+        fontFamily: "Montserrat_700Bold"
     },
 
     //cuadrados diseño
@@ -188,10 +184,10 @@ const styles = StyleSheet.create({
     },
     Iniciar: {
         color: "black",
-        fontWeight: "700",
-        fontSize: 40,
+        fontSize: 36,
         zIndex: 2,
-        bottom: "10.8%"
+        bottom: "10.8%",
+        fontFamily: "Montserrat_700Bold"
 
     },
     txtInput: {
@@ -203,6 +199,7 @@ const styles = StyleSheet.create({
         top: 10,
         justifyContent: "center",
         marginBottom: "7%",
+        fontFamily: "Poppins_400Regular"
 
 
 
@@ -234,9 +231,9 @@ const styles = StyleSheet.create({
     },
     txtRegister: {
         color: "white",
-        fontWeight: "600",
         fontSize: 24,
         zIndex: 1,
+        fontFamily: "Poppins_600SemiBold"
 
     },
 })

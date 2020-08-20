@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import LottieView from 'lottie-react-native'
 
+
 const WINDOW_WIDTH = Dimensions.get('window').width;
-
-
-
 
 export default function WaitFila({ navigation }) {
 
@@ -20,8 +18,8 @@ export default function WaitFila({ navigation }) {
     return (
 
         <Center>
-            <Text style={styles.producto}>Zara Alcorta</Text>
-            <LottieView source={require('./assets/animated-icon/shopping.json')} autoPlay={true} loop={true} style={{ height: 300 }} />
+            <Text style={styles.text1}>Zara Alcorta</Text>
+            <LottieView source={require('../assets/animated-icon/shopping.json')} autoPlay={true} loop={true} style={{ height: 300 }} />
 
             <Text style={styles.text2}>15 minutos restantes...</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => Alert.alert(
@@ -48,16 +46,16 @@ export default function WaitFila({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    producto: {
+    text1: {
         color: "black",
-        fontWeight: "800",
+        fontFamily: "Montserrat_700Bold",
         fontSize: 34,
         marginBottom: "5%",
         bottom: "3%"
     },
     text2: {
         color: "black",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 22,
         textAlign: 'center',
         top: "5%"

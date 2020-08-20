@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 
 export default function PreFila({ navigation }) {
+
     return (
 
         <Center style={{ backgroundColor: "white" }}>
 
-            <Text style={styles.producto}>Zara Alcorta</Text>
-            <Text style={styles.text2}>Ingresa a la cola virtual y{"\n"} seguí probando</Text>
+            <Text style={styles.text1}>Zara Alcorta</Text>
+            <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.text2}>Ingresa a la cola virtual y seguí probando</Text>
             <View style={styles.cuadrado}>
-                <Image style={{ resizeMode: "contain", flex: 1, width: 300, height: 300 }} source={require("./assets/img/3.png")}></Image>
+                <Image style={{ resizeMode: "contain", flex: 1, width: "80%" }} source={require("../assets/img/3.png")}></Image>
             </View>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("WaitFila")}>
                 <Center>
@@ -24,18 +25,20 @@ export default function PreFila({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    producto: {
+    text1: {
         color: "black",
-        fontWeight: "800",
-        fontSize: 34,
+        fontFamily: "Montserrat_700Bold",
+        fontSize: 32,
     },
     text2: {
         color: "black",
-        fontWeight: "400",
+        fontFamily: "Poppins_400Regular",
         fontSize: 22,
         textAlign: 'center',
         marginTop: "5%",
-        marginBottom: "10%"
+        marginBottom: "10%",
+        marginLeft: "5%",
+        marginRight: "5%"
 
     },
     volverBtn: {
@@ -58,8 +61,8 @@ const styles = StyleSheet.create({
     },
     text3: {
         color: "white",
-        fontWeight: "600",
-        fontSize: 24,
+        fontFamily: "Poppins_600SemiBold",
+        fontSize: 22,
 
 
     },
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: "8%"
+        marginTop: "8%",
+
     }
 })

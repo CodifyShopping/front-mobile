@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, AsyncStorage } from 'react-native';
-import { Center } from "./helpers/Center";
+import { Center } from "../helpers/Center";
 import { AntDesign } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
@@ -92,20 +92,20 @@ export default function Views({ route, navigation }) {
     };
 
 
-useEffect(()=>{
-    handleToken()
-},[])
+    useEffect(() => {
+        handleToken()
+    }, [])
 
 
-const handleToken = async () => {
-    await AsyncStorage.getItem('token', (err, result) => {
-        const pre =  result
-       const sliced = pre.slice("10", pre.length-2)
-        console.log(sliced)
-        setToken(sliced)
-    })
+    const handleToken = async () => {
+        await AsyncStorage.getItem('token', (err, result) => {
+            const pre = result
+            const sliced = pre.slice("10", pre.length - 2)
+            console.log(sliced)
+            setToken(sliced)
+        })
 
-}
+    }
 
     const sendI = async () => {
         handleToken()
@@ -204,7 +204,7 @@ const handleToken = async () => {
                 <Text style={styles.price}>${JSON.stringify(precio)}</Text>
                 <Text style={styles.talles}>Talles disponibles</Text>
 
-                <View style={{ position: "absolute", bottom: "5%", height: 90 }}>
+                <View style={{ position: "absolute", bottom: "5%", height: "35%" }}>
 
                     <FlatList
                         data={DATA}
@@ -238,18 +238,18 @@ const handleToken = async () => {
                             <Text style={styles.textProbar}>Probar ahora</Text>
                         </Center>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.addWish} onPress={() => [ addWsihlist()]} >
+                    <TouchableOpacity style={styles.addWish} onPress={() => [addWsihlist()]} >
                         <Center >
-                            {!wish&&(
-                                <Text style={styles.textAddWish}>Agregar a{"\n"}  Wishlist</Text>
+                            {!wish && (
+                                <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Agregar a Wishlist</Text>
                             )
 
                             }
-                            {wish&&(
-                                 <LottieView source={require('./assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
+                            {wish && (
+                                <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
                             )}
-                            
-                            
+
+
                         </Center>
                     </TouchableOpacity>
                 </Center>
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     },
     producto: {
         color: "black",
-        fontWeight: "600",
+        fontFamily: "Montserrat_600SemiBold",
         fontSize: 32,
         top: "5%",
         marginLeft: "5%",
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     },
     price: {
         color: "#FF575F",
-        fontWeight: "700",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 28,
         marginLeft: "5%",
         marginRight: "5%",
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
     },
     talles: {
         color: "black",
-        fontWeight: "500",
+        fontFamily: "Poppins_400Regular",
         fontSize: 20,
         marginLeft: "5%",
         marginRight: "5%",
@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
     },
     talle: {
         fontSize: 20,
+        fontFamily: "Poppins_600SemiBold"
     },
     probar: {
         width: "45%",
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
     },
     textProbar: {
         color: "white",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 20,
     },
     addWish: {
@@ -405,8 +406,9 @@ const styles = StyleSheet.create({
     },
     textAddWish: {
         color: "white",
-        fontWeight: "600",
+        fontFamily: "Poppins_600SemiBold",
         fontSize: 20,
+        textAlign: 'center'
     },
 
 
