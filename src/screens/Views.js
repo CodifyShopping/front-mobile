@@ -12,7 +12,7 @@ import LottieView from 'lottie-react-native'
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
-//console.disableYellowBox = true;
+console.disableYellowBox = true;
 /*
 */
 
@@ -135,13 +135,12 @@ export default function Views({ route, navigation }) {
     }
 
     const addWsihlist = async () => {
+        console.log(id)
         handleToken()
         axios.post('http://35.229.106.56:3000/wishlist/add',
             {
                 //I mayus
                 ProductId: id
-
-
             },
             {
                 headers: { token: token1 }

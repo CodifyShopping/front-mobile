@@ -47,15 +47,12 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 //     },
 // ];
 
-
 const Item = ({ item, onPress, style }) => (
-
 
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
         <View style={{
             flex: 1,
             alignItems: "center",
-
             flexDirection: "row",
         }}
         >
@@ -63,8 +60,8 @@ const Item = ({ item, onPress, style }) => (
             <View style={{ height: "76%", width: "38%", left: "8%", borderRadius: 14 }}>
                 <Center>
 
-                    <Image style={{ resizeMode: "contain", width: "100%" }} source={require('../assets/img/short.jpeg')
-                        // { uri: `data:image/gif;base64,${item.Photo}` } 
+                    <Image style={{ resizeMode: "contain", width: "100%", height: "100%" }} source={//require('../assets/img/short.jpeg')
+                        { uri: `data:image/gif;base64,${item.Photo}` }
                     } />
                 </Center>
             </View>
@@ -126,6 +123,7 @@ export default function WishList({ navigation }) {
                     console.log("FETCH SUCCESSFUL")
                     setDATA(response.data)
                     setLoading(false)
+                    console.log(response.data)
 
                 },
 
@@ -143,10 +141,15 @@ export default function WishList({ navigation }) {
             <TouchableOpacity style={styles.botonVolver} onPress={() => { navigation.navigate("Hola") }}>
                 <AntDesign name="left" size={32} color="white" />
             </TouchableOpacity>
-            <Text style={styles.whishTxt}>Whish List</Text>
+            <Text style={styles.whishTxt}>Wish List</Text>
 
             <View style={{ top: "5%", height: "72%" }}>
-                {!isLoading && (<FlatList
+                {DATA == "No products in wishlist" && (
+                    <Center>
+                        <Text>Tu wish list esta vacia</Text>
+                    </Center>
+                )}
+                {(!isLoading && DATA != "No products in wishlist" && DATA != null) && (<FlatList
                     data={DATA}
                     renderItem={renderItem}
                     keyExtractor={(item) => item._id}
