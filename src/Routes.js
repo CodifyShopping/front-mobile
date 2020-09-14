@@ -7,10 +7,10 @@ import { ActivityIndicator } from 'react-native';
 import Hola from "./screens/Hola";
 import Qr from "./screens/Qr";
 import QrFila from "./screens/QrFila"
-import Producto from "./screens/Producto"
 import Views from "./screens/Views"
 import WishList from "./screens/WishList"
 import Done from "./screens/Done"
+import ErrorFila from "./screens/ErrorFila"
 import PreFila from "./screens/PreFila"
 import WaitFila from "./screens/WaitFila"
 import FinishFila from "./screens/FinishFila"
@@ -75,10 +75,10 @@ export const Routes = ({ }) => {
                     <Stack.Screen name="Hola" component={Hola} />
                     <Stack.Screen name="Qr" component={Qr} />
                     <Stack.Screen name="QrFila" component={QrFila} />
-                    <Stack.Screen name="Producto" component={Producto} />
                     <Stack.Screen name="Views" component={Views} />
                     <Stack.Screen name="WishList" component={WishList} />
                     <Stack.Screen name="Done" component={Done} />
+                    <Stack.Screen name="ErrorFila" component={ErrorFila} />
                     <Stack.Screen name="PreFila" component={PreFila} />
                     <Stack.Screen name="WaitFila" component={WaitFila} />
                     <Stack.Screen name="FinishFila" component={FinishFila} />

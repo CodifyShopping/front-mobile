@@ -15,6 +15,8 @@ export default function QrFila({ navigation }) {
     const [correcto, setCorrecto] = useState(false);
     const [incorrecto, setIncorrecto] = useState(false);
 
+    const [local, setLocal] = useState(false);
+
     useEffect(() => {
         (async () => {
             const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -36,7 +38,7 @@ export default function QrFila({ navigation }) {
 
             })
             .then((response) => {
-
+                setLocal(response.data.Local)
                 setCorrecto(true)
 
             },
@@ -110,7 +112,7 @@ export default function QrFila({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila"), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila", { local: local }), setScanned(false), setCorrecto(false)]} >
                         <Center>
                             <Text style={styles.text2}>Siguiente</Text>
                         </Center>

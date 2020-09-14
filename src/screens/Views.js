@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, AsyncStorage } from 'react-native';
+import { View, Text, Alert, Button, StyleSheet, Image, Dimensions, TouchableOpacity, Share, Component, AsyncStorage } from 'react-native';
 import { Center } from "../helpers/Center";
 import { AntDesign } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox';
@@ -7,6 +7,9 @@ import { FlatList } from 'react-native-gesture-handler';
 // import { color } from 'react-native-reanimated';
 import axios from 'axios';
 import LottieView from 'lottie-react-native'
+//import { Constants } from 'expo-barcode-scanner';
+
+
 
 
 
@@ -79,7 +82,6 @@ export default function Views({ route, navigation }) {
                             "Sin Stock",
                             "No tenemos stock en este talle",
                             [
-
                                 { text: "Entendido", onPress: () => console.log("OK Pressed") }
                             ],
                             { cancelable: false }
@@ -91,11 +93,9 @@ export default function Views({ route, navigation }) {
 
     };
 
-
     useEffect(() => {
         handleToken()
-    }, [])
-
+    }, [token1])
 
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
@@ -136,7 +136,7 @@ export default function Views({ route, navigation }) {
 
     const addWsihlist = async () => {
         console.log(id)
-        handleToken()
+        await handleToken()
         axios.post('http://35.229.106.56:3000/wishlist/add',
             {
                 //I mayus
@@ -160,25 +160,52 @@ export default function Views({ route, navigation }) {
 
     }
 
-    //const talle = selectedTalle
+    const deleteWsihlist = async () => {
+        console.log(id)
+        await handleToken()
+        axios.post('http://35.229.106.56:3000/wishlist/delete',
+            {
+                //I mayus
+                ProductId: id
+            },
+            {
+                headers: { token: token1 }
+
+            })
+
+            .then(() => {
+
+                navigation.navigate("WishList")
+
+
+            },
+
+                (error) => {
+                    console.log(error);
+                });
+
+    }
+
     const { talle } = route.params;
-    //console.log(JSON.stringify(talle))
     const DATA = talle
     console.log(DATA)
-    //const NAME = JSON.stringify({ talle })
-    // const F = NAME.slice("10", NAME.length)
-    // console.log(F)
+
 
     const { nombre } = route.params;
     const { precio } = route.params;
+    const { descuento } = route.params;
     const { photo } = route.params;
     const { id } = route.params;
+    const { local } = route.params;
+    const { prevScreen } = route.params;
+    const desc = 100 * (1 - (descuento / precio))
+    const descResult = Math.floor(desc)
 
     return (
 
         <View style={styles.container}>
             <View style={styles.box1}>
-                <TouchableOpacity style={styles.botonVolver} onPress={() => { navigation.navigate("Qr") }}>
+                <TouchableOpacity style={styles.botonVolver} onPress={() => navigation.goBack()}>
                     <AntDesign name="left" size={32} color="black" />
                 </TouchableOpacity>
             </View>
@@ -200,58 +227,121 @@ export default function Views({ route, navigation }) {
             <View style={styles.box3}>
 
                 <Text style={styles.producto}>{nombre}</Text>
-                <Text style={styles.price}>${JSON.stringify(precio)}</Text>
-                <Text style={styles.talles}>Talles disponibles</Text>
 
-                <View style={{ position: "absolute", bottom: "5%", height: "35%" }}>
+                {(descuento != 0) ? <Text style={styles.price}>
+                    <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: 22, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
+                    <Text style={{ color: "#FF575F", fontSize: 32, lineHeight: 35 }}>{"\n"}${descuento}</Text>
+                    <Text style={{ color: "black", fontSize: 22 }}>  {descResult}% OFF</Text>
 
-                    <FlatList
-                        data={DATA}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.talle}
-                        extraData={selectedId}
-                        horizontal
-                        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
-                        showsHorizontalScrollIndicator={false}
-                    />
+                </Text>
+                    :
+                    <Text style={styles.priceSinDesc}>${JSON.stringify(precio)}</Text>
+                }
 
-                </View>
+                {(prevScreen == "Qr") &&
+                    (<Text style={styles.talles}>Talles disponibles</Text>)
+                }
+                {(prevScreen == "Qr") &&
+                    (<View style={{ position: "absolute", bottom: "5%", height: "35%" }}>
+
+                        <FlatList
+                            data={DATA}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.talle}
+                            extraData={selectedId}
+                            horizontal
+                            contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </View>)
+                }
+                {(prevScreen == "WishList") &&
+                    (
+                        <View>
+                            <Text style={styles.talles}>{local}</Text>
+                        </View>)
+                }
+
 
 
             </View>
             <View style={styles.box4}>
-                <Center>
-                    <TouchableOpacity style={styles.probar} onPress={() => {
-                        selectedId ? ([sendI(), console.log(selectedId)
-                        ]) : (Alert.alert(
-                            "Cuidado",
-                            "No selecionaste una talla",
-                            [
+                {(prevScreen == "Qr") && (
+                    <Center>
+                        <TouchableOpacity style={styles.probar} onPress={() => {
+                            selectedId ? ([sendI(), console.log(selectedId)
+                            ]) : (Alert.alert(
+                                "Cuidado",
+                                "No selecionaste una talla",
+                                [
 
-                                { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                                    { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                                ],
+                                { cancelable: false }
+                            ))
+                        }}>
+                            <Center>
+                                <Text style={styles.textProbar}>Probar ahora</Text>
+                            </Center>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.addWish} onPress={() => [addWsihlist()]} >
+                            <Center >
+                                {!wish && (
+                                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Agregar a Wishlist</Text>
+                                )
+
+                                }
+                                {wish && (
+                                    <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
+                                )}
+
+
+                            </Center>
+                        </TouchableOpacity>
+                    </Center>)}
+                {(prevScreen == "WishList") && (
+                    <Center>
+
+                        <TouchableOpacity style={styles.eliminar} onPress={() => {
+                            Share.share({
+                                url: `data:image/jpeg;base64,${photo}`, // use image/jpeg instead of image/jpg
+                                message: `Mirá el producto de ${local} que tengo en mi wishlist de Codify!`,
+                                media: "twitter"
+                            });
+                        }}>
+                            <Center>
+                                <Text style={styles.textProbar}>Compartir</Text>
+                            </Center>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.addWish} onPress={() => [(Alert.alert(
+                            "Borrar este producto de tu wishlist?",
+                            "Este producto ya no se encontrará en tu wishlist",
+                            [
+                                {
+                                    text: "Cancelar",
+                                    onPress: () => console.log("Cancel Pressed"),
+                                    style: "cancel"
+                                },
+                                { text: "Borrar", onPress: () => deleteWsihlist() }
                             ],
                             { cancelable: false }
-                        ))
-                    }}>
-                        <Center>
-                            <Text style={styles.textProbar}>Probar ahora</Text>
-                        </Center>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.addWish} onPress={() => [addWsihlist()]} >
-                        <Center >
-                            {!wish && (
-                                <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Agregar a Wishlist</Text>
-                            )
+                        ))]} >
+                            <Center >
+                                {!wish && (
+                                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Eliminar de WishList</Text>
+                                )
 
-                            }
-                            {wish && (
-                                <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
-                            )}
+                                }
+                                {wish && (
+                                    <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
+                                )}
 
 
-                        </Center>
-                    </TouchableOpacity>
-                </Center>
+                            </Center>
+                        </TouchableOpacity>
+                    </Center>)}
+
+
             </View>
         </View>
 
@@ -282,12 +372,12 @@ const styles = StyleSheet.create({
     },
     //footer
     box3: {
-        flex: 3.5,
+        flex: 3.75,
         justifyContent: "center",
 
     },
     box4: {
-        flex: 2.25,
+        flex: 2,
         justifyContent: "center",
     },
 
@@ -317,16 +407,28 @@ const styles = StyleSheet.create({
         top: "5%",
         marginLeft: "5%",
         marginRight: "5%",
-        position: "absolute"
+        position: "absolute",
+
     },
     price: {
-        color: "#FF575F",
+        color: "black",
         fontFamily: "Poppins_600SemiBold",
         fontSize: 28,
         marginLeft: "5%",
         marginRight: "5%",
-        top: "27.5%",
-        position: "absolute"
+        top: "24%",
+        position: "absolute",
+
+    },
+    priceSinDesc: {
+        color: "black",
+        fontFamily: "Poppins_600SemiBold",
+        fontSize: 28,
+        marginLeft: "5%",
+        marginRight: "5%",
+        top: "28%",
+        position: "absolute",
+
     },
     talles: {
         color: "black",
@@ -334,7 +436,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: "5%",
         marginRight: "5%",
-        top: "50%",
+        top: "53%",
         position: "absolute"
     },
     item: {
@@ -345,7 +447,7 @@ const styles = StyleSheet.create({
         width: WINDOW_WIDTH / 7,
         height: WINDOW_WIDTH / 7,
         borderRadius: 60,
-        bottom: "-25%",
+        bottom: "-30%",
         //shadow
         shadowColor: "black",
         shadowOffset: {
@@ -355,7 +457,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 9.51,
 
-        elevation: 15,
 
     },
     talle: {
@@ -378,7 +479,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 9.51,
 
-        elevation: 15,
     },
     textProbar: {
         color: "white",
@@ -401,7 +501,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 9.51,
 
-        elevation: 15,
     },
     textAddWish: {
         color: "white",
@@ -409,6 +508,22 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center'
     },
+    eliminar: {
+        width: "45%",
+        height: 80,
+        backgroundColor: "#FF464F",
+        borderRadius: 24,
+        right: "4%",
+        top: "20%",
+        position: "absolute",
+        shadowColor: "#FF464F",
+        shadowOffset: {
+            width: 0,
+            height: 7,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 9.51,
+    }
 
 
 });

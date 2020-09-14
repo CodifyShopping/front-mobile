@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedback, Keyboard, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Alert, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedback, Keyboard, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
 import { Center } from "../helpers/Center";
 import axios from 'axios';
+import { AuthContext } from '../providers/AuthProvider';
 
 export default function Register({ navigation }) {
+    const { login } = useContext(AuthContext)
+
     const [nombre, setNombre] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -19,12 +22,99 @@ export default function Register({ navigation }) {
             password: password
         })
             .then(() => {
-                navigation.navigate("Login")
+                fetchLogin(email, password)
 
             },
 
                 (error) => {
+
+                    console.log(error.response.data)
+                    if (error.response.data == "\"password\" is not allowed to be empty") {
+                        Alert.alert(
+                            "Hay campos sin completar",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    if (error.response.data == "\"email\" is not allowed to be empty") {
+                        Alert.alert(
+                            "Hay campos sin completar",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    if (error.response.data == "\"Nombre\" is not allowed to be empty") {
+                        Alert.alert(
+                            "Hay campos sin completar",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    if (error.response.data == "\"email\" must be a valid email") {
+                        Alert.alert(
+                            "Mail invalido",
+                            "Intentá con otro mail",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    if (error.response.data == "\"password\" length must be at least 6 characters long") {
+                        Alert.alert(
+                            "La contraseña debe ser mayor a 6 caracteres",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+                    if (error.response.data == "Email already exists") {
+                        Alert.alert(
+                            "Este mail ya esta en uso",
+                            "Intentá con otro mail",
+                            [
+
+                                { text: "Entendido" }
+                            ],
+                            { cancelable: false }
+                        )
+                    }
+
+                });
+    }
+
+    const fetchLogin = async (email, password) => {
+        axios.post("http://35.229.106.56:3000/auth/client/login", {
+            email: email,
+            password: password
+        })
+            .then((response) => {
+                login(response.data)
+            },
+
+                (error) => {
                     console.log(error);
+                    Alert.alert(
+                        "Error al registrarse",
+                        "Intentá de nuevo",
+                        [
+
+                            { text: "Entendido", onPress: () => console.log("OK Pressed") }
+                        ],
+                        { cancelable: false }
+                    )
 
                 });
     }
@@ -57,8 +147,8 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../assets/icons/user.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
-                                    placeholder="Nombre"
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
+                                    placeholder="Nombre completo"
                                     onChangeText={text => setNombre(text)}
 
                                 />
@@ -66,7 +156,7 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
 
@@ -75,7 +165,7 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -194,7 +284,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         // marginBottom: "5%",
         marginBottom: "6%",
-
+        fontFamily: "Poppins_400Regular"
 
     },
     Icon: {

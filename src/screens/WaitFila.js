@@ -1,30 +1,84 @@
-import React, { useEffect } from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert, AsyncStorage } from 'react-native';
 import { Center } from "../helpers/Center";
 import LottieView from 'lottie-react-native'
+import io from 'socket.io-client';
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
-export default function WaitFila({ navigation }) {
+export default function WaitFila({ navigation, route }) {
+
+    const { local } = route.params;
+
+    const [token1, setToken] = useState(null);
+    const [msg, setMsg] = useState(null);
+
+    const handleToken = async () => {
+        await AsyncStorage.getItem('token', (err, result) => {
+            const pre = result
+            const sliced = pre.slice("10", pre.length - 2)
+            setToken(sliced)
+        })
+
+    }
+
+    const socketFunc = async () => {
+        const data = { token: token1, local: local }
+        const socket = io("http://35.229.106.56:3000");
+        socket.emit("viewlineCli", data);
+        socket.on("viewlineCli", msg => {
+
+            if (msg == 0) {
+                navigation.navigate("FinishFila")
+
+            }
+            if (msg == -1) {
+                navigation.navigate("Hola")
+
+            }
+            if (msg == -2) {
+                navigation.navigate("ErrorFila")
+
+            }
+            setMsg(msg)
+        })
+    };
+
+
+    const salirDeCola = async () => {
+        const data = { token: token1, local: local }
+        const socket = io("http://35.229.106.56:3000");
+        socket.emit("disconnectedCli", data)
+        socket.on("disconnectedCli", msg => {
+        })
+    };
 
     useEffect(() => {
-        let timer = setInterval(() => navigation.navigate("FinishFila"), 5000);
+        const ac = new AbortController();
+        handleToken()
+        const interval = setInterval(() => {
+            socketFunc()
+        }, 1000);
+        return () => { clearInterval(interval), ac.abort() };
 
-        return () => clearInterval(timer)
+    }, [token1, msg])
 
-    }, [])
+
+
+
 
     return (
 
         <Center>
-            <Text style={styles.text1}>Zara Alcorta</Text>
+            <Text style={styles.text1}>{local}</Text>
             <LottieView source={require('../assets/animated-icon/shopping.json')} autoPlay={true} loop={true} style={{ height: 300 }} />
 
-            <Text style={styles.text2}>15 minutos restantes...</Text>
-            <TouchableOpacity style={styles.volverBtn} onPress={() => Alert.alert(
-                'Queres alir de la cola?',
-                'Perderas tu lugar',
+            {(msg == null || msg == "error") && (<Text style={styles.text2}>Ingresando...</Text>)}
+            {(msg != null && msg != "error") && (<Text style={styles.text2}>Estas numero {msg} en la fila</Text>)}
+            <TouchableOpacity style={styles.volverBtn} onPress={() => [Alert.alert(
+                'Querés salir de la cola?',
+                'Perderás tu lugar',
                 [
                     {
                         text: 'Cancelar',
@@ -34,7 +88,7 @@ export default function WaitFila({ navigation }) {
                     { text: 'Salir', onPress: () => [console.log('Salir Pressed'), navigation.navigate("Hola")] }
                 ],
                 { cancelable: false }
-            )}>
+            ), salirDeCola(),]}>
                 <Center>
                     <Text style={styles.text3}>X</Text>
                 </Center>

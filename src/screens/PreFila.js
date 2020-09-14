@@ -1,19 +1,47 @@
-import React from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, AsyncStorage } from 'react-native';
 import { Center } from "../helpers/Center";
+import io from 'socket.io-client';
 
-export default function PreFila({ navigation }) {
+export default function PreFila({ navigation, route }) {
+
+    const { local } = route.params;
+
+    const [token1, setToken] = useState(null);
+
+    const handleToken = async () => {
+        await AsyncStorage.getItem('token', (err, result) => {
+            const pre = result
+            const sliced = pre.slice("10", pre.length - 2)
+            setToken(sliced)
+        })
+    }
+
+    const socketViewLine = async () => {
+        handleToken()
+        const data = { token: token1, local: local }
+        const socket = io("http://35.229.106.56:3000");
+        socket.emit("enterLine", data);
+        socket.on("enterLine", msg => {
+            console.log("Entré a cola")
+        })
+    };
+
+    useEffect(() => {
+        handleToken()
+    }, [token1])
 
     return (
 
+
         <Center style={{ backgroundColor: "white" }}>
 
-            <Text style={styles.text1}>Zara Alcorta</Text>
+            <Text style={styles.text1}>{local}</Text>
             <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.text2}>Ingresa a la cola virtual y seguí probando</Text>
             <View style={styles.cuadrado}>
                 <Image style={{ resizeMode: "contain", flex: 1, width: "80%" }} source={require("../assets/img/3.png")}></Image>
             </View>
-            <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("WaitFila")}>
+            <TouchableOpacity style={styles.volverBtn} onPress={() => [socketViewLine(), navigation.navigate("WaitFila", { local: local })]}>
                 <Center>
                     <Text style={styles.text3}>Ingresar en cola</Text>
                 </Center>

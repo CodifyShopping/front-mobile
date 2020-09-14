@@ -104,7 +104,7 @@ export default function Hola({ navigation }) {
                     </Center>
 
                     {/* BOTON PARA LOG OUT*/}
-                    {/* <Button title="logout" onPress={() => logout()} /> */}
+                    {/*<Button title="logout" onPress={() => logout()} />*/}
 
 
 

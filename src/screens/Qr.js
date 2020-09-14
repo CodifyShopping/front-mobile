@@ -17,6 +17,7 @@ export default function Qr({ navigation }) {
     const [preci, setPreci] = useState(0);
     const [foto, setFoto] = useState("");
     const [talle, setTalle] = useState([])
+    const [desc, setDesc] = useState("")
     const [id, setId] = useState("")
 
     useEffect(() => {
@@ -47,10 +48,9 @@ export default function Qr({ navigation }) {
                 setFoto(response.data["Photo"])
                 setTalle(response.data.Stock)
                 setId(response.data._id)
-                console.log(response.data._id)
-                console.log(response.data.Nombre);
-                console.log(response.data.Precio);
+                setDesc(response.data.Descuento)
                 setCorrecto(true)
+
 
             },
 
@@ -122,7 +122,7 @@ export default function Qr({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, photo: foto, talle: talle, id: id }), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, descuento: desc, photo: foto, talle: talle, id: id, prevScreen: "Qr" }), setScanned(false), setCorrecto(false)]} >
                         <Center>
                             <Text style={styles.text2}>Ver el producto</Text>
                         </Center>

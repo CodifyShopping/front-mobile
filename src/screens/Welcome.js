@@ -20,7 +20,7 @@ export default function Welcome({ navigation }) {
                 <View style={styles.cuadrado}>
                     <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/1.png")}></Image>
                     <Text style={styles.txt1}>Bienvenido a Codify</Text>
-                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Comprar en los locales nunca habia sido tan facil</Text>
+                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Comprar en los locales nunca había sido tan fácil</Text>
 
                 </View>
                 <TouchableOpacity style={styles.continuar} onPress={() => { next() }}>
@@ -34,7 +34,7 @@ export default function Welcome({ navigation }) {
                 <View style={styles.cuadrado}>
                     <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/2.png")}></Image>
                     <Text style={styles.txt1}>Escaneá y listo</Text>
-                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Elegí la prenda que mas te gusta y pagá desde la app</Text>
+                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Obtené informacion del producto que más te guste</Text>
 
                 </View>
                 <TouchableOpacity style={styles.continuar} onPress={() => { next() }}>
@@ -47,8 +47,8 @@ export default function Welcome({ navigation }) {
                 <Text style={styles.text}>Codify</Text>
                 <View style={styles.cuadrado}>
                     <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/3.png")}></Image>
-                    <Text style={styles.txt1}>No mas colas</Text>
-                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Al momento de pagar podes ingresar en una fila virtual</Text>
+                    <Text style={styles.txt1}>No más colas</Text>
+                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Al momento de pagar podés ingresar en una fila virtual</Text>
                 </View>
                 <TouchableOpacity style={styles.continuar} onPress={() => { navigation.navigate("Register") }}>
                     <Center>

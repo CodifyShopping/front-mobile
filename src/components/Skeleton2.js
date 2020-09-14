@@ -3,19 +3,20 @@ import { StyleSheet, View, Dimensions } from 'react-native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
-export const Skeleton = () => {
+export const Skeleton2 = () => {
     return (
-        <View>
+        <View style={{ flex: 1, width: "100%" }}>
             <View style={styles.item}>
                 <View style={{
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "row",
+
                 }}
                 >
 
-                    <View style={{ right: "2%", width: "38%", height: "76%", borderRadius: 14, backgroundColor: "#dcdcdc" }} />
+                    <View style={{ right: "2%", width: "35%", height: "70%", borderRadius: 14, backgroundColor: "#dcdcdc" }} />
                     <View style={{ width: "48%", height: "76%", flexDirection: "column" }}>
                         <View style={{ top: "7%", left: "6%", width: "85%", height: "18%", backgroundColor: "#dcdcdc", borderRadius: 14 }}></View>
                         <View style={{ top: "17%", left: "6%", width: "85%", height: "18%", backgroundColor: "#dcdcdc", borderRadius: 14 }}></View>
@@ -30,10 +31,11 @@ export const Skeleton = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "row",
+
                 }}
                 >
 
-                    <View style={{ right: "2%", width: "38%", height: "76%", borderRadius: 14, backgroundColor: "#dcdcdc" }} />
+                    <View style={{ right: "2%", width: "35%", height: "70%", borderRadius: 14, backgroundColor: "#dcdcdc" }} />
                     <View style={{ width: "48%", height: "76%", flexDirection: "column" }}>
                         <View style={{ top: "7%", left: "6%", width: "85%", height: "18%", backgroundColor: "#dcdcdc", borderRadius: 14 }}></View>
                         <View style={{ top: "17%", left: "6%", width: "85%", height: "18%", backgroundColor: "#dcdcdc", borderRadius: 14 }}></View>
@@ -50,13 +52,18 @@ export const Skeleton = () => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: 'white',
-        //borderColor: "grey",
-        //borderWidth: 3,
-        marginVertical: 10,
-        width: WINDOW_WIDTH * 0.9,
-        height: WINDOW_WIDTH / 2,
-        borderRadius: 18,
+        backgroundColor: '#FFF',
+        borderRadius: 10,
+        height: 200,
+        margin: 5,
+        marginBottom: 5,
+        shadowColor: '#999',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
+        width: "97%",
+
 
     },
     txt1: {
