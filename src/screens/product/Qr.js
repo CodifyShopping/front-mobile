@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner, requestPermissionsAsync } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
-import { Center } from '../helpers/Center';
+import { Center } from '../../utils/Center';
+import { Colors } from "../../styles/index"
 
-
-
-export default function QrFila({ navigation }) {
+export default function Qr({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
@@ -15,7 +14,15 @@ export default function QrFila({ navigation }) {
     const [correcto, setCorrecto] = useState(false);
     const [incorrecto, setIncorrecto] = useState(false);
 
-    const [local, setLocal] = useState(false);
+    const [nombr, setNombr] = useState("");
+    const [preci, setPreci] = useState(0);
+    const [foto, setFoto] = useState("");
+    const [talle, setTalle] = useState([])
+    const [desc, setDesc] = useState("")
+    const [id, setId] = useState("")
+    const [local, setLocal] = useState("")
+    const [sucursal, setSucursal] = useState(false);
+
 
     useEffect(() => {
         (async () => {
@@ -25,21 +32,26 @@ export default function QrFila({ navigation }) {
     }, []);
 
     const fetchProduct = async (data) => {
-
+        const DATA = JSON.parse(data)
+        console.log(DATA.Sucursal)
+        setSucursal(DATA.Sucursal)
         axios.post('http://35.229.106.56:3000/returnProdCli',
             {
-                id: data
-            },
-            {
-                headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" },
-
-
-
-
+                id: DATA.Id,
+                Sucursal: DATA.Sucursal
             })
-            .then((response) => {
-                setLocal(response.data.Local)
+
+            .then(response => {
+
+                setNombr(response.data["Nombre"])
+                setPreci(response.data["Precio"])
+                setFoto(response.data["Photo"])
+                setTalle(response.data.Stock)
+                setId(response.data._id)
+                setDesc(response.data.Descuento)
                 setCorrecto(true)
+                setLocal(response.data.Local)
+
 
             },
 
@@ -49,7 +61,6 @@ export default function QrFila({ navigation }) {
                 });
     }
 
-    //Pass Array as second argument
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
@@ -96,7 +107,7 @@ export default function QrFila({ navigation }) {
                 Escanea el codigo QR
             </Text>
 
-            <TouchableOpacity style={styles.botonCerrar} onPress={() => { navigation.navigate("Hola") }}>
+            <TouchableOpacity style={styles.botonCerrar} onPress={() => { navigation.navigate("Home") }}>
                 <AntDesign name="close" size={32} color="white" />
             </TouchableOpacity>
             <BarCodeScanner
@@ -112,9 +123,9 @@ export default function QrFila({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila", { local: local }), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Producto", { nombre: nombr, precio: preci, descuento: desc, photo: foto, talle: talle, id: id, local: local, sucursal: sucursal }), setScanned(false), setCorrecto(false)]} >
                         <Center>
-                            <Text style={styles.text2}>Siguiente</Text>
+                            <Text style={styles.text2}>Ver el producto</Text>
                         </Center>
                     </TouchableOpacity>
                 )}
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     zone: {
 
         flex: 0.70,
-        borderColor: "#FF464F",
+        borderColor: Colors.RED_MAIN,
 
         borderRightWidth: 8,
         borderBottomWidth: 8,
@@ -184,12 +195,12 @@ const styles = StyleSheet.create({
         zIndex: 1,
         top: "32%",
 
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 24,
         fontFamily: "Poppins_600SemiBold",
     },
     text2: {
-        color: "black",
+        color: Colors.BLACK,
         position: "absolute",
         fontFamily: "Poppins_600SemiBold",
         fontSize: 18

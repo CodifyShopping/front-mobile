@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, Alert, Text, Button, ImageBackground, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "../helpers/Center";
-import { AuthContext } from '../providers/AuthProvider';
+import { Center } from "../../utils/Center";
+import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
+import { Colors } from "../../styles/index"
 
 
 export default function Login({ navigation }) {
@@ -70,17 +71,17 @@ export default function Login({ navigation }) {
                         <Center>
                             <Text style={styles.Iniciar}>Iniciar sesion</Text>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("../assets/icons/mail.png")}></Image>
+                                <Image style={styles.Icon} source={require("../../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, width: "80%", fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, width: "75%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("../assets/icons/Lock.png")}></Image>
+                                <Image style={styles.Icon} source={require("../../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, width: "80%", fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, width: "75%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -112,19 +113,19 @@ const styles = StyleSheet.create({
     },
     box1: {
         flex: 3.5,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         zIndex: 1
     },
     InsideBox1: {
         position: "relative",
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         flex: 1,
 
 
 
     },
     Bienvenido: {
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 44,
         zIndex: 2,
         fontFamily: "Montserrat_700Bold"
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
         left: "-10%",
         top: "30%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderRadius: 25,
         zIndex: 1
     },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
         left: "45%",
         top: "80%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderTopRightRadius: 24,
         borderTopLeftRadius: 24,
         zIndex: -1
@@ -164,26 +165,26 @@ const styles = StyleSheet.create({
         right: "-10%",
         top: "-15%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderRadius: 25,
         zIndex: 1
     },
 
     box2: {
         flex: 6.5,
-        backgroundColor: '#FF464F',
+        backgroundColor: Colors.RED_MAIN,
         zIndex: 0,
 
 
     },
     InsideBox2: {
-        backgroundColor: "white",
+        backgroundColor: Colors.WHITE,
         flex: 1,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
     },
     Iniciar: {
-        color: "black",
+        color: Colors.BLACK,
         fontSize: 36,
         zIndex: 2,
         bottom: "10.8%",
@@ -193,7 +194,7 @@ const styles = StyleSheet.create({
     txtInput: {
         width: "85%",
         height: 62,
-        borderColor: "#FF464F",
+        borderColor: Colors.RED_MAIN,
         borderWidth: 3,
         borderRadius: 14,
         top: 10,
@@ -214,12 +215,12 @@ const styles = StyleSheet.create({
     BtnRegister: {
         width: "85%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 18,
         top: 10,
 
         //shadows
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
         top: "5%"
     },
     txtRegister: {
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 24,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold"

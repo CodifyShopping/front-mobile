@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Alert, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedback, Keyboard, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, TextInput } from 'react-native';
-import { Center } from "../helpers/Center";
+import { Center } from "../../utils/Center";
 import axios from 'axios';
-import { AuthContext } from '../providers/AuthProvider';
+import { AuthContext } from '../../providers/AuthProvider';
+import { Colors } from "../../styles/index"
 
 export default function Register({ navigation }) {
     const { login } = useContext(AuthContext)
@@ -145,27 +146,27 @@ export default function Register({ navigation }) {
                         <Center>
                             <Text style={styles.Registrarse}>Registrarse</Text>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("../assets/icons/user.png")}></Image>
+                                <Image style={styles.Icon} source={require("../../assets/icons/user.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Nombre completo"
                                     onChangeText={text => setNombre(text)}
 
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("../assets/icons/mail.png")}></Image>
+                                <Image style={styles.Icon} source={require("../../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
+                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
 
                                 />
                             </View>
                             <View style={styles.txtInput}>
-                                <Image style={styles.Icon} source={require("../assets/icons/Lock.png")}></Image>
+                                <Image style={styles.Icon} source={require("../../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "80%" }}
+                                    style={{ height: 50, left: "20%", fontSize: 24, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -195,20 +196,20 @@ const styles = StyleSheet.create({
     },
     box1: {
         flex: 2.5,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         zIndex: 1
 
     },
     InsideBox1: {
         position: "relative",
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         flex: 1,
 
 
 
     },
     Bienvenido: {
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 44,
         zIndex: 2,
         fontFamily: "Montserrat_700Bold"
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
         left: "-10%",
         top: "30%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderRadius: 25,
 
     },
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
         left: "45%",
         top: "80%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderTopRightRadius: 24,
         borderTopLeftRadius: 24,
         zIndex: -1
@@ -248,26 +249,26 @@ const styles = StyleSheet.create({
         right: "-10%",
         top: "-15%",
 
-        backgroundColor: "#FF313B",
+        backgroundColor: Colors.RED,
         borderRadius: 25,
 
     },
 
     box2: {
         flex: 7.5,
-        backgroundColor: '#FF464F'
+        backgroundColor: Colors.RED_MAIN
 
 
     },
     InsideBox2: {
-        backgroundColor: "white",
+        backgroundColor: Colors.WHITE,
         flex: 1,
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         zIndex: 2
     },
     Registrarse: {
-        color: "black",
+        color: Colors.BLACK,
         fontSize: 36,
         zIndex: 2,
         bottom: "9%",
@@ -297,12 +298,12 @@ const styles = StyleSheet.create({
     BtnRegister: {
         width: "85%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 18,
         top: 10,
 
         //shadows
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
         top: "5%"
     },
     txtRegister: {
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 24,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold"

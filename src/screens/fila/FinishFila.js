@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert } from 'react-native';
-import { Center } from "../helpers/Center";
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Center } from "../../utils/Center";
 import LottieView from 'lottie-react-native'
+import { Colors } from "../../styles/index"
 
 export default function FinishFila({ navigation }) {
 
     return (
 
         <Center>
-            <Text style={styles.text1}>Hubo un error</Text>
-            <LottieView source={require('../assets/animated-icon/sad.json')} autoPlay={true} loop={false} style={{ height: 250 }} />
+            <Text style={styles.text1}>Es tu turno!</Text>
+            <LottieView source={require('../../assets/animated-icon/done.json')} autoPlay={true} loop={false} style={styles.Lottie} />
 
-            <Text style={styles.text2}>Intentá nuevamente</Text>
-            <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Hola")}>
+            <Text style={styles.text2}>Acercate a la caja y pagá</Text>
+            <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Home")}>
                 <Center>
-                    <Text style={styles.text3}>Entendido</Text>
+                    <Text style={styles.text3}>Listo</Text>
                 </Center>
             </TouchableOpacity>
 
@@ -25,27 +26,28 @@ export default function FinishFila({ navigation }) {
 
 const styles = StyleSheet.create({
     text1: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Montserrat_700Bold",
         fontSize: 34,
         marginBottom: "5%"
     },
     text2: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
         fontSize: 22,
         marginTop: "8%",
         textAlign: 'center',
-
-
+    },
+    Lottie: {
+        height: 300
     },
     volverBtn: {
         width: "80%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 20,
 
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
 
     },
     text3: {
-        color: "white",
+        color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
         fontSize: 24,
 

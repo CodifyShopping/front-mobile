@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, AsyncStorage } from 'react-native';
-import { Center } from "../helpers/Center";
+import { View, Text, StyleSheet, Image, TouchableOpacity, AsyncStorage } from 'react-native';
+import { Center } from "../../utils/Center";
+import { Colors } from "../../styles/index"
 import io from 'socket.io-client';
 
 export default function PreFila({ navigation, route }) {
 
     const { local } = route.params;
+    const { sucursal } = route.params;
 
     const [token1, setToken] = useState(null);
 
@@ -17,9 +19,9 @@ export default function PreFila({ navigation, route }) {
         })
     }
 
-    const socketViewLine = async () => {
+    const socketEnterLine = async () => {
         handleToken()
-        const data = { token: token1, local: local }
+        const data = { token: token1, local: local, Sucursal: sucursal }
         const socket = io("http://35.229.106.56:3000");
         socket.emit("enterLine", data);
         socket.on("enterLine", msg => {
@@ -34,14 +36,14 @@ export default function PreFila({ navigation, route }) {
     return (
 
 
-        <Center style={{ backgroundColor: "white" }}>
+        <Center style={styles.container}>
 
-            <Text style={styles.text1}>{local}</Text>
+            <Text style={styles.text1}>{local} {sucursal}</Text>
             <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.text2}>Ingresa a la cola virtual y seguí probando</Text>
             <View style={styles.cuadrado}>
-                <Image style={{ resizeMode: "contain", flex: 1, width: "80%" }} source={require("../assets/img/3.png")}></Image>
+                <Image style={styles.image} source={require("../../assets/img/3.png")}></Image>
             </View>
-            <TouchableOpacity style={styles.volverBtn} onPress={() => [socketViewLine(), navigation.navigate("WaitFila", { local: local })]}>
+            <TouchableOpacity style={styles.volverBtn} onPress={() => [socketEnterLine(), navigation.navigate("WaitFila", { local: local, sucursal: sucursal })]}>
                 <Center>
                     <Text style={styles.text3}>Ingresar en cola</Text>
                 </Center>
@@ -53,13 +55,16 @@ export default function PreFila({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "white"
+    },
     text1: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Montserrat_700Bold",
         fontSize: 32,
     },
     text2: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Poppins_400Regular",
         fontSize: 22,
         textAlign: 'center',
@@ -69,13 +74,16 @@ const styles = StyleSheet.create({
         marginRight: "5%"
 
     },
+    image: {
+        resizeMode: "contain", flex: 1, width: "80%"
+    },
     volverBtn: {
         width: "70%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 20,
 
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -88,10 +96,9 @@ const styles = StyleSheet.create({
 
     },
     text3: {
-        color: "white",
+        color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
         fontSize: 22,
-
 
     },
     cuadrado: {

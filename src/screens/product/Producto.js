@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, Button, StyleSheet, Image, Dimensions, TouchableOpacity, Share, Component, AsyncStorage } from 'react-native';
-import { Center } from "../helpers/Center";
+import { Center } from "../../utils/Center";
 import { AntDesign } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
@@ -8,7 +8,9 @@ import { FlatList } from 'react-native-gesture-handler';
 import axios from 'axios';
 import LottieView from 'lottie-react-native'
 //import { Constants } from 'expo-barcode-scanner';
-
+import { Colors } from "../../styles/index"
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Modal from 'react-native-modal';
 
 
 
@@ -55,10 +57,12 @@ const Item = ({ item, onPress, style }) => (
     </TouchableOpacity>
 );
 
-export default function Views({ route, navigation }) {
+export default function Producto({ route, navigation }) {
     const [selectedId, setSelectedId] = useState(null);
+    const [selectedOutOfStock, setSelectedOOS] = useState(null);
     const [token1, setToken] = useState(null);
     const [wish, setWish] = useState(null);
+    const [showPopUp, setPopUp] = useState(false);
 
 
     const renderItem = ({ item }) => {
@@ -76,16 +80,8 @@ export default function Views({ route, navigation }) {
             return (
                 <Item
                     item={item}
-                    style={{ backgroundColor: "grey" }}
                     onPress={() => {
-                        Alert.alert(
-                            "Sin Stock",
-                            "No tenemos stock en este talle",
-                            [
-                                { text: "Entendido", onPress: () => console.log("OK Pressed") }
-                            ],
-                            { cancelable: false }
-                        )
+                        [setSelectedOOS(item.talle), setPopUp(true)]
                     }}
                 />)
         }
@@ -140,7 +136,7 @@ export default function Views({ route, navigation }) {
         axios.post('http://35.229.106.56:3000/wishlist/add',
             {
                 //I mayus
-                ProductId: id
+                ProductId: id,
             },
             {
                 headers: { token: token1 }
@@ -160,35 +156,34 @@ export default function Views({ route, navigation }) {
 
     }
 
-    const deleteWsihlist = async () => {
-        console.log(id)
-        await handleToken()
-        axios.post('http://35.229.106.56:3000/wishlist/delete',
-            {
-                //I mayus
-                ProductId: id
-            },
-            {
-                headers: { token: token1 }
+    // const deleteWsihlist = async () => {
+    //     console.log(id)
+    //     await handleToken()
+    //     axios.post('http://35.229.106.56:3000/wishlist/delete',
+    //         {
+    //             //I mayus
+    //             ProductId: id
+    //         },
+    //         {
+    //             headers: { token: token1 }
 
-            })
+    //         })
 
-            .then(() => {
+    //         .then(() => {
 
-                navigation.navigate("WishList")
+    //             navigation.navigate("WishList")
 
 
-            },
+    //         },
 
-                (error) => {
-                    console.log(error);
-                });
+    //             (error) => {
+    //                 console.log(error);
+    //             });
 
-    }
+    // }
 
     const { talle } = route.params;
     const DATA = talle
-    console.log(DATA)
 
 
     const { nombre } = route.params;
@@ -197,17 +192,53 @@ export default function Views({ route, navigation }) {
     const { photo } = route.params;
     const { id } = route.params;
     const { local } = route.params;
-    const { prevScreen } = route.params;
+    const { sucursal } = route.params;
     const desc = 100 * (1 - (descuento / precio))
     const descResult = Math.floor(desc)
 
     return (
 
         <View style={styles.container}>
+            <Modal
+                backdropOpacity={0.3}
+                isVisible={showPopUp}
+                onBackdropPress={() => setPopUp(false)}
+                style={styles.contentView}
+            >
+                <View style={styles.content}>
+                    <Text style={styles.contentTitle}>No tenemos stock en esta sucursal actualmente</Text>
+                    <View style={styles.buttonsModals}>
+                        <TouchableOpacity style={{ width: 160, height: "45%", backgroundColor: Colors.GRAY_LIGHT, right: "5%", borderRadius: 14 }} onPress={() => setPopUp(false)}>
+                            <Center>
+                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18, color: Colors.WHITE }}>Entendido</Text>
+                            </Center>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ width: 160, height: "45%", backgroundColor: Colors.RED_MAIN, left: "5%", borderRadius: 14 }} onPress={() => [setPopUp(false), navigation.navigate("Sucursales", { local: local, id: id, sucursal: sucursal, talle: selectedOutOfStock })]}>
+                            <Center>
+                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18, textAlign: "center", color: Colors.WHITE }}>Ver otras sucursales</Text>
+                            </Center>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
             <View style={styles.box1}>
-                <TouchableOpacity style={styles.botonVolver} onPress={() => navigation.goBack()}>
-                    <AntDesign name="left" size={32} color="black" />
-                </TouchableOpacity>
+
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center" }}>
+                    <View style={{ flex: 0.5, marginTop: "10%" }}>
+                        <TouchableOpacity style={styles.botonVolver} onPress={() => navigation.navigate("Home")}>
+                            <AntDesign name="left" size={32} color="black" />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 2, marginTop: "10%", justifyContent: "center" }}>
+                        <Text style={{
+                            fontSize: 22, fontFamily: "Montserrat_600SemiBold", alignSelf: "center"
+                        }}>{local} - {sucursal}</Text>
+
+                    </View>
+                    <View style={{ flex: 0.5, marginTop: "10%" }}>
+
+                    </View>
+                </View>
             </View>
             <View style={styles.box2}>
 
@@ -237,109 +268,55 @@ export default function Views({ route, navigation }) {
                     :
                     <Text style={styles.priceSinDesc}>${JSON.stringify(precio)}</Text>
                 }
+                <Text style={styles.talles}>Talles disponibles</Text>
+                <View style={{ height: "35%", top: -10 }}>
 
-                {(prevScreen == "Qr") &&
-                    (<Text style={styles.talles}>Talles disponibles</Text>)
-                }
-                {(prevScreen == "Qr") &&
-                    (<View style={{ position: "absolute", bottom: "5%", height: "35%" }}>
-
-                        <FlatList
-                            data={DATA}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.talle}
-                            extraData={selectedId}
-                            horizontal
-                            contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
-                            showsHorizontalScrollIndicator={false}
-                        />
-                    </View>)
-                }
-                {(prevScreen == "WishList") &&
-                    (
-                        <View>
-                            <Text style={styles.talles}>{local}</Text>
-                        </View>)
-                }
-
-
+                    <FlatList
+                        data={DATA}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.talle}
+                        extraData={selectedId}
+                        horizontal
+                        contentContainerStyle={{ paddingLeft: 10, paddingRight: 10 }}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
 
             </View>
             <View style={styles.box4}>
-                {(prevScreen == "Qr") && (
-                    <Center>
-                        <TouchableOpacity style={styles.probar} onPress={() => {
-                            selectedId ? ([sendI(), console.log(selectedId)
-                            ]) : (Alert.alert(
-                                "Cuidado",
-                                "No selecionaste una talla",
-                                [
 
-                                    { text: "Entendido", onPress: () => console.log("OK Pressed") }
-                                ],
-                                { cancelable: false }
-                            ))
-                        }}>
-                            <Center>
-                                <Text style={styles.textProbar}>Probar ahora</Text>
-                            </Center>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.addWish} onPress={() => [addWsihlist()]} >
-                            <Center >
-                                {!wish && (
-                                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Agregar a Wishlist</Text>
-                                )
-
-                                }
-                                {wish && (
-                                    <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
-                                )}
-
-
-                            </Center>
-                        </TouchableOpacity>
-                    </Center>)}
-                {(prevScreen == "WishList") && (
-                    <Center>
-
-                        <TouchableOpacity style={styles.eliminar} onPress={() => {
-                            Share.share({
-                                url: `data:image/jpeg;base64,${photo}`, // use image/jpeg instead of image/jpg
-                                message: `Mirá el producto de ${local} que tengo en mi wishlist de Codify!`,
-                                media: "twitter"
-                            });
-                        }}>
-                            <Center>
-                                <Text style={styles.textProbar}>Compartir</Text>
-                            </Center>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.addWish} onPress={() => [(Alert.alert(
-                            "Borrar este producto de tu wishlist?",
-                            "Este producto ya no se encontrará en tu wishlist",
+                <Center>
+                    <TouchableOpacity style={styles.probar} onPress={() => {
+                        selectedId ? ([sendI(), console.log(selectedId)
+                        ]) : (Alert.alert(
+                            "Cuidado",
+                            "No selecionaste una talla",
                             [
-                                {
-                                    text: "Cancelar",
-                                    onPress: () => console.log("Cancel Pressed"),
-                                    style: "cancel"
-                                },
-                                { text: "Borrar", onPress: () => deleteWsihlist() }
+
+                                { text: "Entendido", onPress: () => console.log("OK Pressed") }
                             ],
                             { cancelable: false }
-                        ))]} >
-                            <Center >
-                                {!wish && (
-                                    <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.textAddWish}>Eliminar de WishList</Text>
-                                )
+                        ))
+                    }}>
+                        <Center>
+                            <Text style={styles.textProbar}>Probar ahora</Text>
+                        </Center>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.addWish} onPress={() => addWsihlist()} >
+                        <Center >
+                            {!wish && (
+                                <Text numberOfLines={2} ellipsizeMode={'tail'} style={styles.textAddWish}>Agregar a {'\n'}Wishlist</Text>
+                            )
 
-                                }
-                                {wish && (
-                                    <LottieView source={require('../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
-                                )}
+                            }
+                            {wish && (
+                                <LottieView source={require('../../assets/animated-icon/tick2.json')} autoPlay={true} loop={false} style={{ height: 60 }} />
+                            )}
 
 
-                            </Center>
-                        </TouchableOpacity>
-                    </Center>)}
+                        </Center>
+                    </TouchableOpacity>
+                </Center>
 
 
             </View>
@@ -359,8 +336,8 @@ const styles = StyleSheet.create({
 
     box1: {
         flex: 1.25,
-        alignItems: "center",
         justifyContent: "center",
+
 
     },
     //content
@@ -373,7 +350,7 @@ const styles = StyleSheet.create({
     //footer
     box3: {
         flex: 3.75,
-        justifyContent: "center",
+        flexDirection: "column",
 
     },
     box4: {
@@ -382,10 +359,8 @@ const styles = StyleSheet.create({
     },
 
     botonVolver: {
-        position: 'absolute',
         zIndex: 1,
-        left: "3%",
-        bottom: 0
+        marginLeft: "20%",
 
     },
 
@@ -395,52 +370,55 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         borderRadius: 10,
+        resizeMode: "stretch"
     },
     lightbox: {
         top: "2%",
         position: "absolute"
     },
     producto: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Montserrat_600SemiBold",
-        fontSize: 32,
-        top: "5%",
+        fontSize: 26,
+        marginTop: "5%",
         marginLeft: "5%",
         marginRight: "5%",
-        position: "absolute",
+
 
     },
     price: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 28,
+        fontSize: 26,
         marginLeft: "5%",
         marginRight: "5%",
-        top: "24%",
-        position: "absolute",
+        marginTop: "3%",
+
 
     },
     priceSinDesc: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 28,
+        fontSize: 26,
         marginLeft: "5%",
         marginRight: "5%",
-        top: "28%",
-        position: "absolute",
+        marginTop: "5%",
+
 
     },
     talles: {
-        color: "black",
+        color: Colors.BLACK,
         fontFamily: "Poppins_400Regular",
         fontSize: 20,
         marginLeft: "5%",
         marginRight: "5%",
-        top: "53%",
-        position: "absolute"
+        marginTop: "2%",
+
+
     },
+
     item: {
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITE,
         //borderColor: "grey",
         //borderWidth: 3,
         marginHorizontal: 10,
@@ -449,7 +427,7 @@ const styles = StyleSheet.create({
         borderRadius: 60,
         bottom: "-30%",
         //shadow
-        shadowColor: "black",
+        shadowColor: Colors.BLACK,
         shadowOffset: {
             width: 0,
             height: 4,
@@ -466,12 +444,12 @@ const styles = StyleSheet.create({
     probar: {
         width: "45%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 24,
         right: "4%",
         top: "20%",
         position: "absolute",
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -481,19 +459,19 @@ const styles = StyleSheet.create({
 
     },
     textProbar: {
-        color: "white",
+        color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 20,
+        fontSize: 18,
     },
     addWish: {
         width: "45%",
         height: 80,
-        backgroundColor: "#FFC542",
+        backgroundColor: Colors.YELLOW,
         borderRadius: 24,
         top: "20%",
         position: "absolute",
         left: "4%",
-        shadowColor: "#FFC542",
+        shadowColor: Colors.YELLOW,
         shadowOffset: {
             width: 0,
             height: 7,
@@ -503,26 +481,52 @@ const styles = StyleSheet.create({
 
     },
     textAddWish: {
-        color: "white",
+        color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 20,
-        textAlign: 'center'
+        fontSize: 18,
+        textAlign: 'center',
     },
     eliminar: {
         width: "45%",
         height: 80,
-        backgroundColor: "#FF464F",
+        backgroundColor: Colors.RED_MAIN,
         borderRadius: 24,
         right: "4%",
         top: "20%",
         position: "absolute",
-        shadowColor: "#FF464F",
+        shadowColor: Colors.RED_MAIN,
         shadowOffset: {
             width: 0,
             height: 7,
         },
         shadowOpacity: 0.5,
         shadowRadius: 9.51,
+    },
+
+    contentTitle: {
+        fontSize: 22,
+        top: "10%",
+        textAlign: "center",
+        fontFamily: "Poppins_600SemiBold",
+    },
+    contentView: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    content: {
+        backgroundColor: 'white',
+        padding: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopRightRadius: 17,
+        borderTopLeftRadius: 17,
+        height: "35%"
+    },
+    buttonsModals: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
     }
 
 

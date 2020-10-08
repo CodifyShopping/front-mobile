@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import { BarCodeScanner, requestPermissionsAsync } from 'expo-barcode-scanner';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
-import { Center } from '../helpers/Center';
+import { Center } from '../../utils/Center';
+import { Colors } from "../../styles/index"
 
-export default function Qr({ navigation }) {
+
+
+export default function QrFila({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
@@ -13,12 +16,8 @@ export default function Qr({ navigation }) {
     const [correcto, setCorrecto] = useState(false);
     const [incorrecto, setIncorrecto] = useState(false);
 
-    const [nombr, setNombr] = useState("");
-    const [preci, setPreci] = useState(0);
-    const [foto, setFoto] = useState("");
-    const [talle, setTalle] = useState([])
-    const [desc, setDesc] = useState("")
-    const [id, setId] = useState("")
+    const [local, setLocal] = useState(false);
+    const [sucursal, setSucursal] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -28,10 +27,12 @@ export default function Qr({ navigation }) {
     }, []);
 
     const fetchProduct = async (data) => {
-
+        const DATA = JSON.parse(data)
+        setSucursal(DATA.Sucursal)
         axios.post('http://35.229.106.56:3000/returnProdCli',
             {
-                id: data
+                id: DATA.Id,
+                Sucursal: DATA.Sucursal
             },
             {
                 headers: { token: "eyJhbGciOiJIUzI1NiJ9.VW5pcWxv.jeajO8sVCR0886knodmQtHRGbki4W1D1oCrb-yZQ7As" },
@@ -40,17 +41,9 @@ export default function Qr({ navigation }) {
 
 
             })
-
-            .then(response => {
-
-                setNombr(response.data["Nombre"])
-                setPreci(response.data["Precio"])
-                setFoto(response.data["Photo"])
-                setTalle(response.data.Stock)
-                setId(response.data._id)
-                setDesc(response.data.Descuento)
+            .then((response) => {
+                setLocal(response.data.Local)
                 setCorrecto(true)
-
 
             },
 
@@ -60,6 +53,7 @@ export default function Qr({ navigation }) {
                 });
     }
 
+    //Pass Array as second argument
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
@@ -76,37 +70,18 @@ export default function Qr({ navigation }) {
         return <Text>No access to camera</Text>;
     }
 
-
-
     const { Width } = Dimensions.get("screen");
-
-    // functionOne = () => {
-    //     setScanned(false);
-    // }
-    // functionTwo = () => {
-
-    // }
-    // //creo q no funciona. se usaria si se usa el boton que aparece luego de que se escanea el qr
-    // functionCombined = () => {
-    //     this.functionOne();
-    //     this.functionTwo();
-    // }
 
     return (
 
         <View
-            style={{
-                flex: 1,
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+            style={styles.container}>
 
             <Text style={styles.text1}>
                 Escanea el codigo QR
             </Text>
 
-            <TouchableOpacity style={styles.botonCerrar} onPress={() => { navigation.navigate("Hola") }}>
+            <TouchableOpacity style={styles.botonCerrar} onPress={() => { navigation.navigate("Home") }}>
                 <AntDesign name="close" size={32} color="white" />
             </TouchableOpacity>
             <BarCodeScanner
@@ -114,7 +89,7 @@ export default function Qr({ navigation }) {
                 style={StyleSheet.absoluteFillObject}
             />
 
-            <View style={styles.container}>
+            <View style={styles.container2}>
 
                 <View style={styles.zone} />
             </View>
@@ -122,9 +97,9 @@ export default function Qr({ navigation }) {
             {/* 
             BOTON QUE APARECE DESPUES DE ESCANEAR EL QR*/
                 correcto && (
-                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("Views", { nombre: nombr, precio: preci, descuento: desc, photo: foto, talle: talle, id: id, prevScreen: "Qr" }), setScanned(false), setCorrecto(false)]} >
+                    <TouchableOpacity style={styles.boton1} onPress={() => [navigation.navigate("PreFila", { local: local, sucursal: sucursal }), setScanned(false), setCorrecto(false)]} >
                         <Center>
-                            <Text style={styles.text2}>Ver el producto</Text>
+                            <Text style={styles.text2}>Siguiente</Text>
                         </Center>
                     </TouchableOpacity>
                 )}
@@ -148,6 +123,13 @@ export default function Qr({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    container2: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -156,7 +138,7 @@ const styles = StyleSheet.create({
     zone: {
 
         flex: 0.70,
-        borderColor: "#FF464F",
+        borderColor: Colors.RED_MAIN,
 
         borderRightWidth: 8,
         borderBottomWidth: 8,
@@ -180,7 +162,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 1, height: 0 },
         shadowRadius: 5,
         borderRadius: 30,
-        backgroundColor: '#ffffff',
+        backgroundColor: Colors.WHITE,
 
     },
     botonCerrar: {
@@ -194,12 +176,12 @@ const styles = StyleSheet.create({
         zIndex: 1,
         top: "32%",
 
-        color: "white",
+        color: Colors.WHITE,
         fontSize: 24,
         fontFamily: "Poppins_600SemiBold",
     },
     text2: {
-        color: "black",
+        color: Colors.BLACK,
         position: "absolute",
         fontFamily: "Poppins_600SemiBold",
         fontSize: 18

@@ -4,24 +4,27 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native"
 import { ActivityIndicator } from 'react-native';
 
-import Hola from "./screens/Hola";
-import Qr from "./screens/Qr";
-import QrFila from "./screens/QrFila"
-import Views from "./screens/Views"
-import WishList from "./screens/WishList"
-import Done from "./screens/Done"
-import ErrorFila from "./screens/ErrorFila"
-import PreFila from "./screens/PreFila"
-import WaitFila from "./screens/WaitFila"
-import FinishFila from "./screens/FinishFila"
+import Home from "./screens/Home";
+import Qr from "./screens/product/Qr";
+import QrFila from "./screens/fila/QrFila"
+import Producto from "./screens/product/Producto"
+import Sucursales from "./screens/product/Sucursales"
+import WishList from "./screens/wishlist/WishList"
+import ProductoWish from "./screens/wishlist/ProductoWish"
+import TallesSuc from "./screens/wishlist/TallesSuc"
+import Done from "./screens/product/Done"
+import ErrorFila from "./screens/fila/ErrorFila"
+import PreFila from "./screens/fila/PreFila"
+import WaitFila from "./screens/fila/WaitFila"
+import FinishFila from "./screens/fila/FinishFila"
 
-import Welcome from "./screens/Welcome"
-import Login from "./screens/Login"
-import Register from "./screens/Register"
+import Welcome from "./screens/login/Welcome"
+import Login from "./screens/login/Login"
+import Register from "./screens/login/Register"
 
 import { AuthContext } from "./providers/AuthProvider"
 
-import { Center } from "./helpers/Center"
+import { Center } from "./utils/Center"
 
 //fonts
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
@@ -72,11 +75,14 @@ export const Routes = ({ }) => {
         <NavigationContainer>
             {user ?
                 (<Stack.Navigator screenOptions={{ headerShown: false, gestureEnabled: false }} >
-                    <Stack.Screen name="Hola" component={Hola} />
+                    <Stack.Screen name="Home" component={Home} />
                     <Stack.Screen name="Qr" component={Qr} />
                     <Stack.Screen name="QrFila" component={QrFila} />
-                    <Stack.Screen name="Views" component={Views} />
+                    <Stack.Screen name="Producto" component={Producto} />
+                    <Stack.Screen name="Sucursales" component={Sucursales} />
                     <Stack.Screen name="WishList" component={WishList} />
+                    <Stack.Screen name="ProductoWish" component={ProductoWish} />
+                    <Stack.Screen name="TallesSuc" component={TallesSuc} />
                     <Stack.Screen name="Done" component={Done} />
                     <Stack.Screen name="ErrorFila" component={ErrorFila} />
                     <Stack.Screen name="PreFila" component={PreFila} />

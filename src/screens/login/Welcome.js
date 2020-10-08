@@ -2,7 +2,8 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { TouchableOpacity, StyleSheet, Image } from 'react-native'
-import { Center } from "../helpers/Center"
+import { Center } from "../../utils/Center"
+import { Colors } from "../../styles/index"
 
 export default function Welcome({ navigation }) {
     const swiperRef = React.useRef(null);
@@ -18,7 +19,7 @@ export default function Welcome({ navigation }) {
             <View testID="1" style={styles.slide}>
                 <Text style={styles.text}>Codify</Text>
                 <View style={styles.cuadrado}>
-                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/1.png")}></Image>
+                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../../assets/img/1.png")}></Image>
                     <Text style={styles.txt1}>Bienvenido a Codify</Text>
                     <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Comprar en los locales nunca había sido tan fácil</Text>
 
@@ -32,7 +33,7 @@ export default function Welcome({ navigation }) {
             <View testID="2" style={styles.slide}>
                 <Text style={styles.text}>Codify</Text>
                 <View style={styles.cuadrado}>
-                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/2.png")}></Image>
+                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../../assets/img/2.png")}></Image>
                     <Text style={styles.txt1}>Escaneá y listo</Text>
                     <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Obtené informacion del producto que más te guste</Text>
 
@@ -46,7 +47,7 @@ export default function Welcome({ navigation }) {
             <View testID="3" style={styles.slide}>
                 <Text style={styles.text}>Codify</Text>
                 <View style={styles.cuadrado}>
-                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../assets/img/3.png")}></Image>
+                    <Image style={{ resizeMode: "contain", width: "80%", bottom: "5%" }} source={require("../../assets/img/3.png")}></Image>
                     <Text style={styles.txt1}>No más colas</Text>
                     <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt2}>Al momento de pagar podés ingresar en una fila virtual</Text>
                 </View>
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FF313B'
+        backgroundColor: Colors.RED
     },
 
     text: {
-        color: '#fff',
+        color: Colors.WHITE,
         fontSize: 42,
         bottom: "5%",
         fontFamily: "Montserrat_700Bold"
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     cuadrado: {
         height: "55%",
         width: "87%",
-        backgroundColor: "white",
+        backgroundColor: Colors.WHITE,
         borderRadius: 24,
         alignItems: "center",
         justifyContent: "center"
@@ -87,13 +88,13 @@ const styles = StyleSheet.create({
     , continuar: {
         width: "60%",
         height: "9%",
-        backgroundColor: "#fff",
+        backgroundColor: Colors.WHITE,
         borderRadius: 16,
         top: "5%",
 
     },
     textContinuar: {
-        color: '#FF313B',
+        color: Colors.RED,
         fontSize: 24,
         fontWeight: 'bold',
         fontFamily: "Poppins_600SemiBold"

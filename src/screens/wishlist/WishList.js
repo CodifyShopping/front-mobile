@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, AsyncStorage, TouchableOpacity, Dimensions, Text, Image, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Center } from "../helpers/Center";
+import { Center } from "../../utils/Center";
 import axios from 'axios';
 import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Skeleton2 } from '../components/Skeleton2.js';
+import { Skeleton2 } from '../../components/Skeleton2.js';
+import { Colors } from "../../styles/index"
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -54,7 +55,7 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 export default function WishList({ navigation }) {
 
     const pressHandler = (_id, Nombre, Precio, Photo, Local, Descuento) => {
-        navigation.navigate("Views", { nombre: Nombre, precio: Precio, descuento: Descuento, photo: Photo, id: _id, local: Local, prevScreen: "WishList" })
+        navigation.navigate("ProductoWish", { nombre: Nombre, precio: Precio, descuento: Descuento, photo: Photo, id: _id, local: Local })
         setLoading(true)
     }
 
@@ -154,12 +155,14 @@ export default function WishList({ navigation }) {
 
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
-            const pre = result
-            const sliced = pre.slice("10", pre.length - 2)
-            setToken(sliced)
+            const pre = JSON.parse(result)
+            setToken(pre.token)
+
         })
 
     }
+
+
 
     const fetchProd = async () => {
 
@@ -177,6 +180,7 @@ export default function WishList({ navigation }) {
                     console.log("FETCH SUCCESSFUL")
                     setDATA(response.data)
                     setLoading(false)
+
 
                 },
 
@@ -217,7 +221,7 @@ export default function WishList({ navigation }) {
     return (
 
         <View style={styles.container}>
-            <TouchableOpacity style={styles.botonVolver} onPress={() => { navigation.navigate("Hola") }}>
+            <TouchableOpacity style={styles.botonVolver} onPress={() => { navigation.navigate("Home") }}>
                 <AntDesign name="left" size={32} color="white" />
             </TouchableOpacity>
             <Text style={styles.whishTxt}>Wish List</Text>
@@ -251,14 +255,14 @@ export default function WishList({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFC542",
+        backgroundColor: Colors.YELLOW,
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
     },
     whishTxt: {
-        color: "white",
+        color: Colors.WHITE,
         fontWeight: "800",
         fontSize: 34,
         bottom: "0%",
@@ -288,7 +292,7 @@ const styles = StyleSheet.create({
         fontFamily: "Poppins_400Regular",
     },
     rowFront: {
-        backgroundColor: '#FFF',
+        backgroundColor: Colors.WHITE,
         borderRadius: 10,
         height: 200,
         margin: 5,
@@ -300,7 +304,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     rowFrontVisible: {
-        backgroundColor: '#FFF',
+        backgroundColor: Colors.WHITE,
         borderRadius: 10,
         height: 200,
         padding: 10,
@@ -308,7 +312,7 @@ const styles = StyleSheet.create({
     },
     rowBack: {
         alignItems: 'center',
-        backgroundColor: '#FF464F',
+        backgroundColor: Colors.RED_MAIN,
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
 
     },
     backRightBtnRight: {
-        backgroundColor: '#FF464F',
+        backgroundColor: Colors.RED_MAIN,
         right: 0,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
