@@ -4,27 +4,27 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native"
 import { ActivityIndicator } from 'react-native';
 
-import Home from "./screens/Home";
-import Qr from "./screens/product/Qr";
-import QrFila from "./screens/fila/QrFila"
-import Producto from "./screens/product/Producto"
-import Sucursales from "./screens/product/Sucursales"
-import WishList from "./screens/wishlist/WishList"
-import ProductoWish from "./screens/wishlist/ProductoWish"
-import TallesSuc from "./screens/wishlist/TallesSuc"
-import Done from "./screens/product/Done"
-import ErrorFila from "./screens/fila/ErrorFila"
-import PreFila from "./screens/fila/PreFila"
-import WaitFila from "./screens/fila/WaitFila"
-import FinishFila from "./screens/fila/FinishFila"
+import Home from "../screens/Home";
+import Qr from "../screens/product/Qr";
+import QrFila from "../screens/fila/QrFila"
+import Producto from "../screens/product/Producto"
+import Sucursales from "../screens/product/Sucursales"
+import WishList from "../screens/wishlist/WishList"
+import ProductoWish from "../screens/wishlist/ProductoWish"
+import TallesSuc from "../screens/wishlist/TallesSuc"
+import Done from "../screens/product/Done"
+import ErrorFila from "../screens/fila/ErrorFila"
+import PreFila from "../screens/fila/PreFila"
+import WaitFila from "../screens/fila/WaitFila"
+import FinishFila from "../screens/fila/FinishFila"
 
-import Welcome from "./screens/login/Welcome"
-import Login from "./screens/login/Login"
-import Register from "./screens/login/Register"
+import Welcome from "../screens/login/Welcome"
+import Login from "../screens/login/Login"
+import Register from "../screens/login/Register"
 
-import { AuthContext } from "./providers/AuthProvider"
+import { AuthContext } from "../providers/AuthProvider"
 
-import { Center } from "./utils/Center"
+import { Center } from "../utils/Center"
 
 //fonts
 import { useFonts, Montserrat_700Bold, Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';

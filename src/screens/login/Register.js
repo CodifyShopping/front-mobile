@@ -3,7 +3,7 @@ import { View, Alert, Text, KeyboardAvoidingView, Button, TouchableWithoutFeedba
 import { Center } from "../../utils/Center";
 import axios from 'axios';
 import { AuthContext } from '../../providers/AuthProvider';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 export default function Register({ navigation }) {
     const { login } = useContext(AuthContext)
@@ -17,7 +17,7 @@ export default function Register({ navigation }) {
         console.log(nombre)
         console.log(email)
         console.log(password)
-        axios.post("http://35.229.106.56:3000/auth/client/register", {
+        axios.post("http://54.84.31.119:3000/auth/client/register", {
             Nombre: nombre,
             email: email,
             password: password
@@ -97,7 +97,7 @@ export default function Register({ navigation }) {
     }
 
     const fetchLogin = async (email, password) => {
-        axios.post("http://35.229.106.56:3000/auth/client/login", {
+        axios.post("http://54.84.31.119:3000/auth/client/login", {
             email: email,
             password: password
         })
@@ -148,7 +148,7 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../../assets/icons/user.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "75%" }}
+                                    style={{ height: 50, left: "20%", fontSize: Typography.xs, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Nombre completo"
                                     onChangeText={text => setNombre(text)}
 
@@ -157,7 +157,7 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, fontFamily: "Poppins_400Regular", width: "75%" }}
+                                    style={{ height: 50, left: "20%", fontSize: Typography.xs, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
 
@@ -166,7 +166,7 @@ export default function Register({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 24, fontFamily: "Poppins_400Regular", width: "75%" }}
+                                    style={{ height: 50, left: "20%", fontSize: Typography.m, fontFamily: "Poppins_400Regular", width: "75%" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
     Bienvenido: {
         color: Colors.WHITE,
-        fontSize: 44,
+        fontSize: Typography.huge,
         zIndex: 2,
         fontFamily: "Montserrat_700Bold"
     },
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     },
     Registrarse: {
         color: Colors.BLACK,
-        fontSize: 36,
+        fontSize: Typography.xl,
         zIndex: 2,
         bottom: "9%",
         fontFamily: "Montserrat_700Bold"
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     },
     txtRegister: {
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold"
 

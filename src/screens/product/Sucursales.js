@@ -7,7 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Skeleton2 } from '../../components/Skeleton2.js';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 import { FlatList } from 'react-native-gesture-handler';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -71,7 +71,7 @@ export default function Sucursales({ navigation, route }) {
     const fetchSucursales = async () => {
         handleToken()
         if (token != null) {
-            axios.post('http://35.229.106.56:3000/returnProdSuc',
+            axios.post('http://54.84.31.119:3000/returnProdSuc',
                 {
                     id: id,
                     Sucursal: sucursal,
@@ -103,7 +103,7 @@ export default function Sucursales({ navigation, route }) {
                 <AntDesign name="left" size={32} color="white" />
             </TouchableOpacity>
             <Text style={styles.sucTxt}>Sucursales</Text>
-            <Text style={{ color: Colors.WHITE, fontFamily: "Poppins_400Regular", fontSize: 22, top: "1%" }}>Talle: {talle}</Text>
+            <Text style={{ color: Colors.WHITE, fontFamily: "Poppins_400Regular", fontSize: Typography.s, top: "1%" }}>Talle: {talle}</Text>
 
             <View style={{ marginTop: "8%", height: "72%", width: "100%" }}>
                 <FlatList
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     },
     sucTxt: {
         color: Colors.WHITE,
-        fontSize: 28,
+        fontSize: Typography.l,
         fontFamily: "Montserrat_700Bold",
     },
     botonVolver: {
@@ -137,18 +137,18 @@ const styles = StyleSheet.create({
         right: "40%",
     },
     txt1: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_600SemiBold"
 
     },
     txt2: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_400Regular",
         color: Colors.GREEN_LIGHT
 
     },
     txt3: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_400Regular",
         textAlign: "center"
     },

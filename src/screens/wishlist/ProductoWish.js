@@ -73,7 +73,7 @@ export default function ProductoWish({ route, navigation }) {
     const deleteWsihlist = async () => {
         console.log(id)
         await handleToken()
-        axios.post('http://35.229.106.56:3000/wishlist/delete',
+        axios.post('http://54.84.31.119:3000/wishlist/delete',
             {
                 //I mayus
                 ProductId: id
@@ -107,7 +107,7 @@ export default function ProductoWish({ route, navigation }) {
     }
 
     const verSuc = async () => {
-        axios.post("http://35.229.106.56:3000/returnProdSuc/Sucursal",
+        axios.post("http://54.84.31.119:3000/returnProdSuc/Sucursal",
             {
                 NombreLocal: local
             }, {
@@ -127,7 +127,7 @@ export default function ProductoWish({ route, navigation }) {
 
     const verStock = async (data) => {
         console.log(data)
-        axios.post('http://35.229.106.56:3000/returnProdCli',
+        axios.post('http://54.84.31.119:3000/returnProdCli',
             {
                 id: id,
                 Sucursal: data
@@ -179,7 +179,7 @@ export default function ProductoWish({ route, navigation }) {
                     <View style={{ flex: 2, marginTop: "10%", justifyContent: "center" }}>
 
                         <Text style={{
-                            fontSize: 22, fontFamily: "Montserrat_600SemiBold", alignSelf: "center"
+                            fontSize: Typography.s, fontFamily: "Montserrat_600SemiBold", alignSelf: "center"
                         }}>{local}</Text>
 
                     </View>
@@ -229,9 +229,9 @@ export default function ProductoWish({ route, navigation }) {
                 <Text style={styles.producto}>{nombre}</Text>
 
                 {(descuento != 0) ? <Text style={styles.price}>
-                    <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: 22, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
-                    <Text style={{ color: "#FF575F", fontSize: 32, lineHeight: 35 }}>{"\n"}${descuento}</Text>
-                    <Text style={{ color: "black", fontSize: 22 }}>  {descResult}% OFF</Text>
+                    <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: Typography.s, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
+                    <Text style={{ color: "#FF575F", fontSize: Typography.xl, lineHeight: 35 }}>{"\n"}${descuento}</Text>
+                    <Text style={{ color: "black", fontSize: Typography.s }}>  {descResult}% OFF</Text>
 
                 </Text>
                     :
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     producto: {
         color: Colors.BLACK,
         fontFamily: "Montserrat_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginTop: "5%",
         marginLeft: "5%",
         marginRight: "5%",
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     price: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "3%",
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     priceSinDesc: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "5%",
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     talles: {
         color: Colors.BLACK,
         fontFamily: "Poppins_400Regular",
-        fontSize: 20,
+        fontSize: Typography.xs,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "2%",
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
 
     },
     talle: {
-        fontSize: 16,
+        fontSize: Typography.xxs,
         fontFamily: "Poppins_600SemiBold",
         marginLeft: "15%"
     },
@@ -412,12 +412,12 @@ const styles = StyleSheet.create({
     textProbar: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 18,
+        fontSize: Typography.xxs,
     },
     textAddWish: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 18,
+        fontSize: Typography.xxs,
         textAlign: 'center',
     },
     eliminar: {

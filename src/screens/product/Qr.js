@@ -4,7 +4,7 @@ import { BarCodeScanner, requestPermissionsAsync } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
 import { Center } from '../../utils/Center';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 export default function Qr({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
@@ -35,7 +35,7 @@ export default function Qr({ navigation }) {
         const DATA = JSON.parse(data)
         console.log(DATA.Sucursal)
         setSucursal(DATA.Sucursal)
-        axios.post('http://35.229.106.56:3000/returnProdCli',
+        axios.post('http://54.84.31.119:3000/returnProdCli',
             {
                 id: DATA.Id,
                 Sucursal: DATA.Sucursal
@@ -196,14 +196,14 @@ const styles = StyleSheet.create({
         top: "32%",
 
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         fontFamily: "Poppins_600SemiBold",
     },
     text2: {
         color: Colors.BLACK,
         position: "absolute",
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 18
+        fontSize: Typography.xxs
     }
 
 

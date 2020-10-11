@@ -12,18 +12,12 @@ export const FONT_BOLD_MON = 'Montserrat_700Bold';
 
 // FONT SIZE
 //codify icon
-export const FONT_SIZE_46 = scaleFont(46);
+export const huge = scaleFont(46);
+export const xl = scaleFont(28);
+export const l = scaleFont(26);
+export const m = scaleFont(24);
+export const s = scaleFont(22);
+export const xs = scaleFont(20);
+export const xxs = scaleFont(18);
 
-export const FONT_SIZE_36 = scaleFont(36);
-export const FONT_SIZE_34 = scaleFont(34);
-export const FONT_SIZE_32 = scaleFont(32);
-export const FONT_SIZE_30 = scaleFont(30);
-export const FONT_SIZE_28 = scaleFont(28);
-export const FONT_SIZE_26 = scaleFont(26);
-export const FONT_SIZE_24 = scaleFont(24);
-export const FONT_SIZE_22 = scaleFont(22);
-export const FONT_SIZE_20 = scaleFont(20);
-export const FONT_SIZE_18 = scaleFont(18);
-export const FONT_SIZE_16 = scaleFont(16);
-export const FONT_SIZE_14 = scaleFont(14);
 

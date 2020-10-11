@@ -5,12 +5,10 @@ import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import axios from 'axios';
 import { AuthContext } from "../providers/AuthProvider";
-import { Colors } from "../styles/index"
+import { Colors, Typography } from "../styles/index"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AntDesign } from '@expo/vector-icons';
-//import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
-
+//import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 // const DATA = [
@@ -32,7 +30,6 @@ import { AntDesign } from '@expo/vector-icons';
 //     },
 
 // ];
-
 
 
 export default function Home({ navigation }) {
@@ -163,7 +160,7 @@ const styles = StyleSheet.create({
     },
     Codify: {
         color: Colors.WHITE,
-        fontSize: 46,
+        fontSize: Typography.huge,
         zIndex: 2,
         position: "absolute",
         fontFamily: "Montserrat_700Bold"
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
     Bienvenido: {
         color: Colors.BLACK,
         fontWeight: "700",
-        fontSize: 32,
+        fontSize: Typography.xl,
         zIndex: 1,
         position: "absolute",
         top: "7%",
@@ -239,7 +236,7 @@ const styles = StyleSheet.create({
     },
     Escanear: {
         width: "81%",
-        height: 120,
+        height: "19%",
         backgroundColor: Colors.RED,
         borderRadius: 24,
         flexDirection: "row",
@@ -259,7 +256,7 @@ const styles = StyleSheet.create({
     },
     textEscanear: {
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold",
         marginLeft: "8%",
@@ -268,7 +265,7 @@ const styles = StyleSheet.create({
     },
     Fila: {
         width: "81%",
-        height: 120,
+        height: "19%",
         backgroundColor: Colors.RED_MAIN,
         borderRadius: 24,
         //top: 25,
@@ -288,7 +285,7 @@ const styles = StyleSheet.create({
     },
     textFila: {
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold",
         marginLeft: "8%",
@@ -303,7 +300,7 @@ const styles = StyleSheet.create({
 
     WishList: {
         width: "81%",
-        height: 100,
+        height: "19%",
         backgroundColor: Colors.YELLOW,
         borderRadius: 24,
         //top: 40,
@@ -325,43 +322,43 @@ const styles = StyleSheet.create({
     },
     textWishlist: {
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold",
         marginLeft: "8%",
 
     },
-    Comercios: {
-        color: Colors.BLACK,
-        fontWeight: "700",
-        fontSize: 34,
-        zIndex: 1,
-        position: "absolute",
-        left: "10%",
-        top: 0
-    },
-    item: {
-        top: 70,
-        backgroundColor: Colors.RED_MAIN,
-        marginHorizontal: 10,
-        width: 90,
-        height: 90,
-        borderRadius: 24,
+    // Comercios: {
+    //     color: Colors.BLACK,
+    //     fontWeight: "700",
+    //     fontSize: 34,
+    //     zIndex: 1,
+    //     position: "absolute",
+    //     left: "10%",
+    //     top: 0
+    // },
+    // item: {
+    //     top: 70,
+    //     backgroundColor: Colors.RED_MAIN,
+    //     marginHorizontal: 10,
+    //     width: 90,
+    //     height: 90,
+    //     borderRadius: 24,
 
-        shadowColor: Colors.RED_MAIN,
-        shadowOffset: {
-            width: 0,
-            height: 7,
-        },
-        shadowOpacity: 0.43,
-        shadowRadius: 9.51,
-        elevation: 15,
+    //     shadowColor: Colors.RED_MAIN,
+    //     shadowOffset: {
+    //         width: 0,
+    //         height: 7,
+    //     },
+    //     shadowOpacity: 0.43,
+    //     shadowRadius: 9.51,
+    //     elevation: 15,
 
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: "700",
-        color: Colors.WHITE
-    },
+    // },
+    // title: {
+    //     fontSize: 20,
+    //     fontWeight: "700",
+    //     color: Colors.WHITE
+    // },
 
 });

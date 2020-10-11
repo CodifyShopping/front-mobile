@@ -22,7 +22,7 @@ export default function PreFila({ navigation, route }) {
     const socketEnterLine = async () => {
         handleToken()
         const data = { token: token1, local: local, Sucursal: sucursal }
-        const socket = io("http://35.229.106.56:3000");
+        const socket = io("http://54.84.31.119:3000");
         socket.emit("enterLine", data);
         socket.on("enterLine", msg => {
             console.log("Entré a cola")
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
     text1: {
         color: Colors.BLACK,
         fontFamily: "Montserrat_700Bold",
-        fontSize: 32,
+        fontSize: Typography.xl,
     },
     text2: {
         color: Colors.BLACK,
         fontFamily: "Poppins_400Regular",
-        fontSize: 22,
+        fontSize: Typography.s,
         textAlign: 'center',
         marginTop: "5%",
         marginBottom: "10%",
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     text3: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 22,
+        fontSize: Typography.s,
 
     },
     cuadrado: {

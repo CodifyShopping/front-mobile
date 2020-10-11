@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 
     text: {
         color: Colors.WHITE,
-        fontSize: 42,
+        fontSize: Typography.huge,
         bottom: "5%",
         fontFamily: "Montserrat_700Bold"
 
@@ -95,15 +95,15 @@ const styles = StyleSheet.create({
     },
     textContinuar: {
         color: Colors.RED,
-        fontSize: 24,
+        fontSize: Typography.m,
         fontWeight: 'bold',
         fontFamily: "Poppins_600SemiBold"
     },
     txt1: {
-        textAlign: "center", fontSize: 28, top: "6%", fontFamily: "Poppins_600SemiBold",
+        textAlign: "center", fontSize: Typography.xl, top: "6%", fontFamily: "Poppins_600SemiBold",
     },
     txt2: {
-        textAlign: "center", fontSize: 18, top: "8%", fontFamily: "Poppins_400Regular", marginLeft: "8%", marginRight: "8%"
+        textAlign: "center", fontSize: Typography.xxs, top: "8%", fontFamily: "Poppins_400Regular", marginLeft: "8%", marginRight: "8%"
     }
 
 })

@@ -3,7 +3,7 @@ import { View, Alert, Text, Button, ImageBackground, TouchableWithoutFeedback, K
 import { Center } from "../../utils/Center";
 import { AuthContext } from '../../providers/AuthProvider';
 import axios from 'axios';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 
 export default function Login({ navigation }) {
@@ -15,7 +15,7 @@ export default function Login({ navigation }) {
     const fetchLogin = async () => {
         console.log(email)
         console.log(password)
-        axios.post("http://35.229.106.56:3000/auth/client/login", {
+        axios.post("http://54.84.31.119:3000/auth/client/login", {
             email: email,
             password: password
         })
@@ -73,7 +73,7 @@ export default function Login({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../../assets/icons/mail.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, width: "75%", fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: Typography.xs, width: "75%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Email"
                                     onChangeText={text => setEmail(text)}
                                 />
@@ -81,7 +81,7 @@ export default function Login({ navigation }) {
                             <View style={styles.txtInput}>
                                 <Image style={styles.Icon} source={require("../../assets/icons/Lock.png")}></Image>
                                 <TextInput
-                                    style={{ height: 50, left: "20%", fontSize: 20, width: "75%", fontFamily: "Poppins_400Regular" }}
+                                    style={{ height: 50, left: "20%", fontSize: Typography.xs, width: "75%", fontFamily: "Poppins_400Regular" }}
                                     placeholder="Contraseña"
                                     secureTextEntry={true}
                                     onChangeText={text => setPassword(text)}
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     },
     Bienvenido: {
         color: Colors.WHITE,
-        fontSize: 44,
+        fontSize: Typography.huge,
         zIndex: 2,
         fontFamily: "Montserrat_700Bold"
     },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     },
     Iniciar: {
         color: Colors.BLACK,
-        fontSize: 36,
+        fontSize: Typography.xl,
         zIndex: 2,
         bottom: "10.8%",
         fontFamily: "Montserrat_700Bold"
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     },
     txtRegister: {
         color: Colors.WHITE,
-        fontSize: 24,
+        fontSize: Typography.m,
         zIndex: 1,
         fontFamily: "Poppins_600SemiBold"
 

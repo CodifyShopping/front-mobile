@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, TouchableOpacity, Component, Alert, AsyncStorage } from 'react-native';
 import { Center } from "../../utils/Center";
 import LottieView from 'lottie-react-native'
 import io from 'socket.io-client';
 import { Colors } from "../../styles/index"
+import { useFocusEffect } from '@react-navigation/native';
+
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -27,21 +29,21 @@ export default function WaitFila({ navigation, route }) {
 
     const socketFunc = async () => {
         const data = { token: token1, local: local, Sucursal: sucursal }
-        const socket = io("http://35.229.106.56:3000");
+        const socket = io("http://54.84.31.119:3000");
         socket.emit("viewlineCli", data);
         socket.on("viewlineCli", msg => {
             console.log(msg)
             if (msg == 0) {
                 navigation.navigate("FinishFila")
-                socket.close()
+                socket.disconnect()
             }
             if (msg == -1) {
                 navigation.navigate("Home")
-                socket.close()
+                socket.disconnect()
             }
             if (msg == -2) {
                 navigation.navigate("ErrorFila")
-                socket.close()
+                socket.disconnect()
             }
             setMsg(msg)
         })
@@ -50,32 +52,25 @@ export default function WaitFila({ navigation, route }) {
 
     const salirDeCola = async () => {
         const data = { token: token1, local: local, Sucursal: sucursal }
-        const socket = io("http://35.229.106.56:3000");
+        const socket = io("http://54.84.31.119:3000");
         socket.emit("disconnectedCli", data)
         socket.on("disconnectedCli", msg => {
-            socket.close()
+
         })
     };
 
-    useEffect(() => {
-        handleToken()
-        const interval = setInterval(() => {
-            socketFunc()
-        }, 1000);
-
-        return () => [clearInterval(interval)];
-
-    }, [token1, msg])
-
-    useEffect(() => {
-        return () => console.log('unmounting...');
-
-    }, [])
-
-
-
-
-
+    useFocusEffect(
+        useCallback(() => {
+            handleToken()
+            const interval = setInterval(() => {
+                socketFunc()
+            }, 1000);
+            const socket = io("http://54.84.31.119:3000");
+            return () => {
+                clearInterval(interval), socket.close();
+            };
+        }, [token1])
+    );
 
     return (
 
@@ -112,14 +107,14 @@ const styles = StyleSheet.create({
     text1: {
         color: Colors.BLACK,
         fontFamily: "Montserrat_700Bold",
-        fontSize: 34,
+        fontSize: Typography.xl,
         marginBottom: "5%",
         bottom: "3%"
     },
     text2: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 22,
+        fontSize: Typography.s,
         textAlign: 'center',
         top: "5%"
 
@@ -143,7 +138,7 @@ const styles = StyleSheet.create({
     text3: {
         color: Colors.WHITE,
         fontWeight: "600",
-        fontSize: 24,
+        fontSize: Typography.m,
 
     },
 })

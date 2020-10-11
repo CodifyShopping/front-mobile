@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
     text1: {
         color: Colors.BLACK,
         fontFamily: "Montserrat_700Bold",
-        fontSize: 34,
+        fontSize: Typography.xl,
         marginBottom: "5%"
     },
     text2: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 22,
+        fontSize: Typography.m,
         marginTop: "8%",
         textAlign: 'center',
     },
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     text3: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 24,
+        fontSize: Typography.m,
 
     },
 })

@@ -28,7 +28,7 @@ export default function TallesSuc({ navigation, route }) {
                     <View style={{
                         alignItems: "center",
                     }}>
-                        <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 16 }}>{item.talle}</Text>
+                        <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: Typography.xxs }}>{item.talle}</Text>
                     </View>
                 </View>
             </View>
@@ -70,8 +70,8 @@ export default function TallesSuc({ navigation, route }) {
             <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <Image style={{ resizeMode: "contain", width: 100, height: 70, marginBottom: "5%", marginTop: "5%" }} source={require("../../assets/icons/shop.png")}></Image>
                 <Text style={styles.sucTxt}>{local} - {sucursal}</Text>
-                <Text style={{ color: Colors.BLACK, fontFamily: "Poppins_400Regular", fontSize: 22 }}>Galería el Solar, Arce 946 CABA</Text>
-                <Text style={{ color: Colors.BLACK, fontFamily: "Poppins_600SemiBold", fontSize: 20, top: "10%" }}>Talles disponibles</Text>
+                <Text style={{ color: Colors.BLACK, fontFamily: "Poppins_400Regular", fontSize: Typography.s }}>Galería el Solar, Arce 946 CABA</Text>
+                <Text style={{ color: Colors.BLACK, fontFamily: "Poppins_600SemiBold", fontSize: Typography.xs, top: "10%" }}>Talles disponibles</Text>
             </View>
             <View style={{ marginTop: "8%", height: "72%", width: "100%", justifyContent: "center" }}>
                 <FlatList
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     },
     sucTxt: {
         color: Colors.BLACK,
-        fontSize: 28,
+        fontSize: Typography.xl,
         fontFamily: "Montserrat_700Bold",
     },
     botonVolver: {
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 
     },
     txt1: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_600SemiBold"
 
     },

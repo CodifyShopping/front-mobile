@@ -170,7 +170,7 @@ export default function WishList({ navigation }) {
         console.log(token1)
 
         if (token1 != null) {
-            axios.post('http://35.229.106.56:3000/wishlist/show',
+            axios.post('http://54.84.31.119:3000/wishlist/show',
                 {},
                 {
                     headers: { token: token1 },
@@ -195,7 +195,7 @@ export default function WishList({ navigation }) {
     const deleteWsihlist = async (ID) => {
         console.log(ID)
         await handleToken()
-        axios.post('http://35.229.106.56:3000/wishlist/delete',
+        axios.post('http://54.84.31.119:3000/wishlist/delete',
             {
                 //I mayus
                 ProductId: ID
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     whishTxt: {
         color: Colors.WHITE,
         fontWeight: "800",
-        fontSize: 34,
+        fontSize: Typography.xl,
         bottom: "0%",
         fontFamily: "Montserrat_700Bold",
     },
@@ -276,19 +276,19 @@ const styles = StyleSheet.create({
 
     },
     txt1: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         bottom: "5%",
         fontFamily: "Poppins_600SemiBold"
 
     },
     txt2: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         bottom: "2%",
         fontFamily: "Poppins_400Regular",
 
     },
     txt3: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_400Regular",
     },
     rowFront: {

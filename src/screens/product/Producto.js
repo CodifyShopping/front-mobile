@@ -8,8 +8,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import axios from 'axios';
 import LottieView from 'lottie-react-native'
 //import { Constants } from 'expo-barcode-scanner';
-import { Colors } from "../../styles/index"
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Colors, Typography } from "../../styles/index"
 import Modal from 'react-native-modal';
 
 
@@ -105,7 +104,7 @@ export default function Producto({ route, navigation }) {
 
     const sendI = async () => {
         handleToken()
-        axios.post('http://35.229.106.56:3000/reqProducto/client',
+        axios.post('http://54.84.31.119:3000/reqProducto/client',
             {
                 //I mayus
                 ProductId: id,
@@ -133,7 +132,7 @@ export default function Producto({ route, navigation }) {
     const addWsihlist = async () => {
         console.log(id)
         await handleToken()
-        axios.post('http://35.229.106.56:3000/wishlist/add',
+        axios.post('http://54.84.31.119:3000/wishlist/add',
             {
                 //I mayus
                 ProductId: id,
@@ -159,7 +158,7 @@ export default function Producto({ route, navigation }) {
     // const deleteWsihlist = async () => {
     //     console.log(id)
     //     await handleToken()
-    //     axios.post('http://35.229.106.56:3000/wishlist/delete',
+    //     axios.post('http://54.84.31.119:3000/wishlist/delete',
     //         {
     //             //I mayus
     //             ProductId: id
@@ -210,12 +209,12 @@ export default function Producto({ route, navigation }) {
                     <View style={styles.buttonsModals}>
                         <TouchableOpacity style={{ width: 160, height: "45%", backgroundColor: Colors.GRAY_LIGHT, right: "5%", borderRadius: 14 }} onPress={() => setPopUp(false)}>
                             <Center>
-                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18, color: Colors.WHITE }}>Entendido</Text>
+                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: Typography.xxs, color: Colors.WHITE }}>Entendido</Text>
                             </Center>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ width: 160, height: "45%", backgroundColor: Colors.RED_MAIN, left: "5%", borderRadius: 14 }} onPress={() => [setPopUp(false), navigation.navigate("Sucursales", { local: local, id: id, sucursal: sucursal, talle: selectedOutOfStock })]}>
                             <Center>
-                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18, textAlign: "center", color: Colors.WHITE }}>Ver otras sucursales</Text>
+                                <Text style={{ fontFamily: "Poppins_400Regular", fontSize: Typography.xxs, textAlign: "center", color: Colors.WHITE }}>Ver otras sucursales</Text>
                             </Center>
                         </TouchableOpacity>
                     </View>
@@ -231,7 +230,7 @@ export default function Producto({ route, navigation }) {
                     </View>
                     <View style={{ flex: 2, marginTop: "10%", justifyContent: "center" }}>
                         <Text style={{
-                            fontSize: 22, fontFamily: "Montserrat_600SemiBold", alignSelf: "center"
+                            fontSize: Typography.s, fontFamily: "Montserrat_600SemiBold", alignSelf: "center"
                         }}>{local} - {sucursal}</Text>
 
                     </View>
@@ -260,9 +259,9 @@ export default function Producto({ route, navigation }) {
                 <Text style={styles.producto}>{nombre}</Text>
 
                 {(descuento != 0) ? <Text style={styles.price}>
-                    <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: 22, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
-                    <Text style={{ color: "#FF575F", fontSize: 32, lineHeight: 35 }}>{"\n"}${descuento}</Text>
-                    <Text style={{ color: "black", fontSize: 22 }}>  {descResult}% OFF</Text>
+                    <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: Typography.s, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
+                    <Text style={{ color: "#FF575F", fontSize: Typography.xl, lineHeight: 35 }}>{"\n"}${descuento}</Text>
+                    <Text style={{ color: "black", fontSize: Typography.s }}>  {descResult}% OFF</Text>
 
                 </Text>
                     :
@@ -379,7 +378,7 @@ const styles = StyleSheet.create({
     producto: {
         color: Colors.BLACK,
         fontFamily: "Montserrat_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginTop: "5%",
         marginLeft: "5%",
         marginRight: "5%",
@@ -389,7 +388,7 @@ const styles = StyleSheet.create({
     price: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "3%",
@@ -399,7 +398,7 @@ const styles = StyleSheet.create({
     priceSinDesc: {
         color: Colors.BLACK,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 26,
+        fontSize: Typography.l,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "5%",
@@ -409,7 +408,7 @@ const styles = StyleSheet.create({
     talles: {
         color: Colors.BLACK,
         fontFamily: "Poppins_400Regular",
-        fontSize: 20,
+        fontSize: Typography.xs,
         marginLeft: "5%",
         marginRight: "5%",
         marginTop: "2%",
@@ -438,12 +437,12 @@ const styles = StyleSheet.create({
 
     },
     talle: {
-        fontSize: 20,
+        fontSize: Typography.xs,
         fontFamily: "Poppins_600SemiBold"
     },
     probar: {
         width: "45%",
-        height: 80,
+        height: "54%",
         backgroundColor: Colors.RED_MAIN,
         borderRadius: 24,
         right: "4%",
@@ -461,11 +460,11 @@ const styles = StyleSheet.create({
     textProbar: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 18,
+        fontSize: Typography.xxs,
     },
     addWish: {
         width: "45%",
-        height: 80,
+        height: "54%",
         backgroundColor: Colors.YELLOW,
         borderRadius: 24,
         top: "20%",
@@ -483,28 +482,12 @@ const styles = StyleSheet.create({
     textAddWish: {
         color: Colors.WHITE,
         fontFamily: "Poppins_600SemiBold",
-        fontSize: 18,
+        fontSize: Typography.xxs,
         textAlign: 'center',
-    },
-    eliminar: {
-        width: "45%",
-        height: 80,
-        backgroundColor: Colors.RED_MAIN,
-        borderRadius: 24,
-        right: "4%",
-        top: "20%",
-        position: "absolute",
-        shadowColor: Colors.RED_MAIN,
-        shadowOffset: {
-            width: 0,
-            height: 7,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 9.51,
     },
 
     contentTitle: {
-        fontSize: 22,
+        fontSize: Typography.s,
         top: "10%",
         textAlign: "center",
         fontFamily: "Poppins_600SemiBold",
