@@ -7,9 +7,9 @@ import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Skeleton2 } from '../../components/Skeleton2.js';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 import { FlatList } from 'react-native-gesture-handler';
-import { Montserrat_600SemiBold } from '@expo-google-fonts/montserrat';
+
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -78,7 +78,7 @@ export default function TallesSuc({ navigation, route }) {
                     data={DATA}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                 />
             </View>
 

@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { Center } from "../../utils/Center"
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 export default function Welcome({ navigation }) {
     const swiperRef = React.useRef(null);

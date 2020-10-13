@@ -6,15 +6,13 @@ import Lightbox from 'react-native-lightbox';
 import { FlatList } from 'react-native-gesture-handler';
 // import { color } from 'react-native-reanimated';
 import axios from 'axios';
-import LottieView from 'lottie-react-native'
 //import { Constants } from 'expo-barcode-scanner';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from 'react-native-modal';
 
-const DATA = [
-    "Belgrano", "Abasto", "Solar"
-];
+// const DATA = [
+//     "Belgrano", "Abasto", "Solar"
+// ];
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;

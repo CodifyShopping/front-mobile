@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { AntDesign } from '@expo/vector-icons';
 import axios from "axios"
 import { Center } from '../../utils/Center';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 
 

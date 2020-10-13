@@ -3,7 +3,7 @@ import { View, Text, Button, ImageBackground, StyleSheet, Image, Dimensions, Tou
 import { Center } from "../../utils/Center";
 import LottieView from 'lottie-react-native'
 import io from 'socket.io-client';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 import { useFocusEffect } from '@react-navigation/native';
 
 

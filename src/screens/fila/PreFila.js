@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Center } from "../../utils/Center";
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 import io from 'socket.io-client';
 
 export default function PreFila({ navigation, route }) {

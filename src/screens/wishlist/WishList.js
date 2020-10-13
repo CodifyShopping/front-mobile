@@ -7,7 +7,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Skeleton2 } from '../../components/Skeleton2.js';
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 

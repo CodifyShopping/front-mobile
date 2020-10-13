@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Center } from "../../utils/Center";
 import LottieView from 'lottie-react-native'
-import { Colors } from "../../styles/index"
+import { Colors, Typography } from "../../styles/index"
 
 export default function FinishFila({ navigation }) {
 
