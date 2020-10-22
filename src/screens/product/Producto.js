@@ -108,7 +108,8 @@ export default function Producto({ route, navigation }) {
             {
                 //I mayus
                 ProductId: id,
-                talle: selectedId
+                talle: selectedId,
+                Sucursal: sucursal
 
 
             },
@@ -120,6 +121,7 @@ export default function Producto({ route, navigation }) {
             .then(() => {
 
                 navigation.navigate("Done")
+                console.log("funcionó")
 
             },
 
