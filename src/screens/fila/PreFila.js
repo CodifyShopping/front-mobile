@@ -13,9 +13,8 @@ export default function PreFila({ navigation, route }) {
 
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
-            const pre = result
-            const sliced = pre.slice("10", pre.length - 2)
-            setToken(sliced)
+            const pre = JSON.parse(result)
+            setToken(pre.token)
         })
     }
 
@@ -26,7 +25,11 @@ export default function PreFila({ navigation, route }) {
         socket.emit("enterLine", data);
         socket.on("enterLine", msg => {
             console.log("Entré a cola")
+            console.log(msg)
+            navigation.navigate("WaitFila", { local: local, sucursal: sucursal, cajaNum: msg })
+
         })
+
     };
 
     useEffect(() => {
@@ -43,7 +46,7 @@ export default function PreFila({ navigation, route }) {
             <View style={styles.cuadrado}>
                 <Image style={styles.image} source={require("../../assets/img/3.png")}></Image>
             </View>
-            <TouchableOpacity style={styles.volverBtn} onPress={() => [socketEnterLine(), navigation.navigate("WaitFila", { local: local, sucursal: sucursal })]}>
+            <TouchableOpacity style={styles.volverBtn} onPress={() => [socketEnterLine()]}>
                 <Center>
                     <Text style={styles.text3}>Ingresar en cola</Text>
                 </Center>

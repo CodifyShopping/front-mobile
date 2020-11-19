@@ -60,10 +60,8 @@ export default function ProductoWish({ route, navigation }) {
 
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
-            const pre = result
-            const sliced = pre.slice("10", pre.length - 2)
-            console.log(sliced)
-            setToken(sliced)
+            const pre = JSON.parse(result)
+            setToken(pre.token)
         })
 
     }
@@ -119,7 +117,7 @@ export default function ProductoWish({ route, navigation }) {
         },
 
             (error) => {
-                console.log(error);
+                console.log(error.response.data);
             });
     }
 
@@ -139,7 +137,7 @@ export default function ProductoWish({ route, navigation }) {
             },
 
                 (error) => {
-                    console.log(error);
+                    console.log(error.response.data);
                     Alert.alert(
                         "No hay stock en esta sucursal",
                         "Intentá en otro local",
@@ -160,8 +158,9 @@ export default function ProductoWish({ route, navigation }) {
     const { photo } = route.params;
     const { id } = route.params;
     const { local } = route.params;
-    const desc = 100 * (1 - (descuento / precio))
+    const desc = (precio / 100) * (100 - descuento)
     const descResult = Math.floor(desc)
+
 
     return (
 
@@ -228,8 +227,8 @@ export default function ProductoWish({ route, navigation }) {
 
                 {(descuento != 0) ? <Text style={styles.price}>
                     <Text style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', textDecorationColor: "grey", color: "grey", fontSize: Typography.s, fontFamily: "Poppins_400Regular" }}>${JSON.stringify(precio)}</Text>
-                    <Text style={{ color: "#FF575F", fontSize: Typography.xl, lineHeight: 35 }}>{"\n"}${descuento}</Text>
-                    <Text style={{ color: "black", fontSize: Typography.s }}>  {descResult}% OFF</Text>
+                    <Text style={{ color: "#FF575F", fontSize: Typography.xl, lineHeight: 35 }}>{"\n"}${descResult}</Text>
+                    <Text style={{ color: "black", fontSize: Typography.s }}>  {descuento}% OFF</Text>
 
                 </Text>
                     :

@@ -4,7 +4,9 @@ import { Center } from "../../utils/Center";
 import LottieView from 'lottie-react-native'
 import { Colors, Typography } from "../../styles/index"
 
-export default function FinishFila({ navigation }) {
+export default function FinishFila({ navigation, route }) {
+
+    const { cajaNum } = route.params;
 
     return (
 
@@ -12,7 +14,7 @@ export default function FinishFila({ navigation }) {
             <Text style={styles.text1}>Es tu turno!</Text>
             <LottieView source={require('../../assets/animated-icon/done.json')} autoPlay={true} loop={false} style={styles.Lottie} />
 
-            <Text style={styles.text2}>Acercate a la caja y pagá</Text>
+            <Text style={styles.text2}>Acercate a la <Text style={{ fontFamily: 'Poppins_600SemiBold' }}>caja {cajaNum}</Text> y pagá</Text>
             <TouchableOpacity style={styles.volverBtn} onPress={() => navigation.navigate("Home")}>
                 <Center>
                     <Text style={styles.text3}>Listo</Text>
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
     },
     text2: {
         color: Colors.BLACK,
-        fontFamily: "Poppins_600SemiBold",
+        fontFamily: "Poppins_400Regular",
         fontSize: Typography.m,
         marginTop: "8%",
         textAlign: 'center',

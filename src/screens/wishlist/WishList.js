@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, AsyncStorage, TouchableOpacity, Dimensions, Text, Image, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Center } from "../../utils/Center";
 import axios from 'axios';
-import { useIsFocused } from "@react-navigation/native";
+//import { useIsFocused } from "@react-navigation/native";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Skeleton2 } from '../../components/Skeleton2.js';
 import { Colors, Typography } from "../../styles/index"
+import { useFocusEffect } from '@react-navigation/native';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -80,7 +81,7 @@ export default function WishList({ navigation }) {
                     </View>
                     <View style={{ left: "20%", width: "50%" }}>
                         <Text numberOfLines={2} ellipsizeMode={'head'} style={styles.txt1}>{item.Nombre}</Text>
-                        <Text style={styles.txt2}>${item.Descuento === 0 ? item.Precio : item.Descuento}</Text>
+                        <Text style={styles.txt2}>${item.Descuento === 0 ? item.Precio : Math.floor((item.Precio / 100) * (100 - item.Descuento))}</Text>
                         <Text style={styles.txt3}>{item.Local}</Text>
                     </View>
                 </View>
@@ -147,11 +148,7 @@ export default function WishList({ navigation }) {
     const [DATA, setDATA] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        fetchProd()
-    }, [token1, isFocused])
+    //const isFocused = useIsFocused(); 
 
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
@@ -162,35 +159,48 @@ export default function WishList({ navigation }) {
 
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            let isActive = true
+
+            const fetchProd = async () => {
+
+                handleToken()
+                console.log(token1)
+
+                if (token1 != null) {
+                    axios.post('http://54.84.31.119:3000/wishlist/show',
+                        {},
+                        {
+                            headers: { token: token1 },
+                        })
+
+                        .then(response => {
+                            console.log("FETCH SUCCESSFUL")
+                            if (isActive) {
+                                setDATA(response.data)
+                                setLoading(false)
+                            }
 
 
-    const fetchProd = async () => {
+                        },
 
-        handleToken()
-        console.log(token1)
+                            (error) => {
+                                console.log(error.response.data);
 
-        if (token1 != null) {
-            axios.post('http://54.84.31.119:3000/wishlist/show',
-                {},
-                {
-                    headers: { token: token1 },
-                })
+                            });
+                }
 
-                .then(response => {
-                    console.log("FETCH SUCCESSFUL")
-                    setDATA(response.data)
-                    setLoading(false)
+            }
 
+            fetchProd()
 
-                },
-
-                    (error) => {
-                        console.log(error);
-
-                    });
-        }
-
-    }
+            return () => {
+                isActive = false;
+                console.log("unmounted")
+            };
+        }, [token1])
+    );
 
     const deleteWsihlist = async (ID) => {
         console.log(ID)

@@ -77,22 +77,6 @@ export default function Qr({ navigation }) {
         return <Text>No access to camera</Text>;
     }
 
-
-
-    const { Width } = Dimensions.get("screen");
-
-    // functionOne = () => {
-    //     setScanned(false);
-    // }
-    // functionTwo = () => {
-
-    // }
-    // //creo q no funciona. se usaria si se usa el boton que aparece luego de que se escanea el qr
-    // functionCombined = () => {
-    //     this.functionOne();
-    //     this.functionTwo();
-    // }
-
     return (
 
         <View
@@ -165,7 +149,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 8,
         aspectRatio: 1,
         borderRadius: 25,
-        marginTop: "17.5%"
 
     },
     boton1: {
@@ -176,7 +159,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "70%",
-        height: "6,5%",
+        height: 50,
         shadowColor: 'rgba(0, 0, 0, 0.1)',
         shadowOffset: { width: 1, height: 0 },
         shadowRadius: 5,
@@ -191,9 +174,8 @@ const styles = StyleSheet.create({
         left: "3%"
     },
     text1: {
-        position: 'absolute',
         zIndex: 1,
-        top: "32%",
+        top: "28%",
 
         color: Colors.WHITE,
         fontSize: Typography.m,

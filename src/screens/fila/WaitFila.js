@@ -5,7 +5,7 @@ import LottieView from 'lottie-react-native'
 import io from 'socket.io-client';
 import { Colors, Typography } from "../../styles/index"
 import { useFocusEffect } from '@react-navigation/native';
-
+import { AntDesign } from '@expo/vector-icons';
 
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -14,48 +14,49 @@ export default function WaitFila({ navigation, route }) {
 
     const { local } = route.params;
     const { sucursal } = route.params;
+    const { cajaNum } = route.params;
 
     const [token1, setToken] = useState(null);
     const [msg, setMsg] = useState(null);
 
+    const [isActive, setActive] = useState(false);
+
     const handleToken = async () => {
         await AsyncStorage.getItem('token', (err, result) => {
-            const pre = result
-            const sliced = pre.slice("10", pre.length - 2)
-            setToken(sliced)
+            const pre = JSON.parse(result)
+            setToken(pre.token)
         })
 
     }
 
     const socketFunc = async () => {
-        const data = { token: token1, local: local, Sucursal: sucursal }
+        const data = { token: token1, local: local, Sucursal: sucursal, Caja: cajaNum }
         const socket = io("http://54.84.31.119:3000");
         socket.emit("viewlineCli", data);
         socket.on("viewlineCli", msg => {
             console.log(msg)
+            setMsg(msg)
             if (msg == 0) {
-                navigation.navigate("FinishFila")
-                socket.disconnect()
+                navigation.navigate("FinishFila", { cajaNum: cajaNum })
             }
             if (msg == -1) {
                 navigation.navigate("Home")
-                socket.disconnect()
             }
             if (msg == -2) {
                 navigation.navigate("ErrorFila")
-                socket.disconnect()
             }
-            setMsg(msg)
+
         })
+
     };
 
-
     const salirDeCola = async () => {
-        const data = { token: token1, local: local, Sucursal: sucursal }
+        const data = { token: token1, local: local, Sucursal: sucursal, Caja: cajaNum }
         const socket = io("http://54.84.31.119:3000");
         socket.emit("disconnectedCli", data)
         socket.on("disconnectedCli", msg => {
-
+            console.log(msg)
+            navigation.navigate("Home")
         })
     };
 
@@ -67,9 +68,11 @@ export default function WaitFila({ navigation, route }) {
             }, 1000);
             const socket = io("http://54.84.31.119:3000");
             return () => {
-                clearInterval(interval), socket.close();
+                clearInterval(interval);
+                socket.disconnect();
+                console.log("unmounted");
             };
-        }, [token1])
+        }, [token1, msg])
     );
 
     return (
@@ -89,12 +92,14 @@ export default function WaitFila({ navigation, route }) {
                         onPress: () => console.log('Cancel Pressed'),
                         style: 'cancel'
                     },
-                    { text: 'Salir', onPress: () => [console.log('Salir Pressed'), navigation.navigate("Home"), salirDeCola()] }
+                    { text: 'Salir', onPress: () => [console.log('Salir Pressed'), salirDeCola()] }
                 ],
                 { cancelable: false }
             )]}>
                 <Center>
-                    <Text style={styles.text3}>X</Text>
+                    <Text style={styles.text3}>
+                        <AntDesign name="close" size={24} color="white" />
+                    </Text>
                 </Center>
             </TouchableOpacity>
 

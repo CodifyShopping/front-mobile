@@ -33,6 +33,10 @@ import { AppLoading } from 'expo';
 
 const Stack = createStackNavigator()
 
+//mejorar rendimiento de memoria de cada celular 
+import { enableScreens } from 'react-native-screens';
+enableScreens();
+
 export const Routes = ({ }) => {
     const { user, getToken
     } = useContext(AuthContext)

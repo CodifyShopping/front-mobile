@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 8,
         aspectRatio: 1,
         borderRadius: 25,
-        marginTop: "17.5%"
 
     },
     boton1: {
@@ -172,9 +171,8 @@ const styles = StyleSheet.create({
         left: "3%"
     },
     text1: {
-        position: 'absolute',
         zIndex: 1,
-        top: "32%",
+        top: "28%",
 
         color: Colors.WHITE,
         fontSize: Typography.m,
